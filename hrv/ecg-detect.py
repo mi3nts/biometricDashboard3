@@ -1,7 +1,6 @@
 from ecgdetectors import Detectors
 import numpy as np
 import matplotlib.pyplot as plt
-import pathlib
 
 
 raw_data = np.loadtxt('sample.tsv')
