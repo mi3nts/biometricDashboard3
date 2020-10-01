@@ -1,27 +1,17 @@
-import heartpy
-import ecgdetectors
+from heartpy import heartpy
 from pandas import read_csv
-import matplotlib.pyplot as plt
 
+
+# df = read_csv(filepath_or_buffer='../SendData4/data.csv')
 df = read_csv(filepath_or_buffer='../SendData4/sampleDataBM.csv')
-raw_ecg = df[0:2000]["ECG"]
-fs = 500
-
-"""
-Test using py-ecg-detectors library
-"""
-detector = ecgdetectors.Detectors(fs)
-r_peaks = detector.pan_tompkins_detector(unfiltered_ecg=raw_ecg)
-plt.figure()
-plt.plot(raw_ecg)
-plt.plot(r_peaks, raw_ecg[r_peaks], 'ro')
-plt.title('py-ecg-detectors library R Peak results')
-plt.show()
-
+fs = 500.0
+raw_ecg = df[:7500]['ECG'].values.flatten()
+filtered_ecg = heartpy.enhance_peaks(raw_ecg)
+# raw_ecg = df.values.flatten()
 
 """
 Test using heartpy library
 """
-working_data, measures = heartpy.process(raw_ecg, 500.0)
+working_data, measures = heartpy.process(hrdata=filtered_ecg, sample_rate=fs)
 heartpy.plotter(working_data=working_data, measures=measures)
 
