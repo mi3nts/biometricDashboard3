@@ -82,7 +82,7 @@ class QRSDetectorOnline(object):
         self.measurement = 0
         self.detected_qrs = 0
         self.most_recent_measurements = deque([0.0], self.number_of_samples_stored)
-        self.most_recent_rr_list = deque([0.0], self.number_of_samples_stored)
+        self.most_recent_rr_list = deque([], self.number_of_samples_stored)
         self.hrv_measures = {}
         self.samples_since_last_detected_qrs = 0
         self.qrs_peak_value = 0.0
@@ -106,10 +106,13 @@ class QRSDetectorOnline(object):
         :param str raw_measurement: ECG most recent raw measurement in "timestamp,measurement" format
         """
         self.measurement = float(raw_measurement)
-
+        self.detected_qrs = 0
         # Appending measurements to deque used for rotating most recent samples for further analysis and detection.
         self.most_recent_measurements.append(self.measurement)
         self.detect_peaks(self.most_recent_measurements)
+
+        if self.detected_qrs == 1:
+            self.most_recent_rr_list.append(self.measurement)
         return self.most_recent_rr_list
 
     def detect_peaks(self, most_recent_measurements):
@@ -151,7 +154,6 @@ class QRSDetectorOnline(object):
 
         # After a valid QRS complex detection, there is a 200 ms refractory period before next one can be detected.
         if self.samples_since_last_detected_qrs > self.refractory_period:
-
             # Check whether any peak was detected in analysed samples window.
             if len(detected_peaks_values) > 0:
 
@@ -164,7 +166,7 @@ class QRSDetectorOnline(object):
                     self.handle_detection()
                     self.samples_since_last_detected_qrs = 0
 
-                    self.most_recent_rr_list.append(most_recent_peak_value)
+                    self.detected_qrs = 1
 
                     # Adjust QRS peak value used later for setting QRS-noise threshold.
                     self.qrs_peak_value = self.qrs_peak_filtering_factor * most_recent_peak_value + \
