@@ -111,9 +111,15 @@ class QRSDetectorOnline(object):
         self.most_recent_measurements.append(self.measurement)
         self.detect_peaks(self.most_recent_measurements)
 
+        # If the signal is an R peak, then append it to the list of most recent R peaks.
         if self.detected_qrs == 1:
             self.most_recent_rr_list.append(self.measurement)
-        return self.most_recent_rr_list
+
+        # Call calculate_hrv function to get the three hrv calculations
+        hrv_calculations = self.calculate_hrv(self.most_recent_rr_list)
+        hrv_calculations['is_peak'] = self.detected_qrs
+
+        return hrv_calculations
 
     def detect_peaks(self, most_recent_measurements):
         """

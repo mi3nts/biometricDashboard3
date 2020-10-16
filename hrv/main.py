@@ -11,9 +11,6 @@ while True:
     # interested in it)
     sample, timestamp = inlet.pull_sample()
     ecg_signal = sample[68]
-    rr_list = ecg_processing.process_measurement(ecg_signal)
-    if len(rr_list) > 1:
-        current_hrv = ecg_processing.calculate_hrv(rr_list)
-        print(current_hrv)
+    measurements = ecg_processing.process_measurement(ecg_signal)
     time.sleep(0.1)
 
