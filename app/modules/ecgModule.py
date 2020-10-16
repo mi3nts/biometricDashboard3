@@ -6,11 +6,18 @@
 
 # import bokeh module
 from bokeh.plotting import figure,show
+from bokeh.io import curdoc, show 
 from bokeh.models import Title, Text
 import random as random
+import time
 from bokeh.models import ColumnDataSource, Range1d, LabelSet, Label
 
 class ecgModule:
+    def add_text(self, num):
+         N = 9
+         text = [str(random.randint(0, N))]
+         print("called")
+         self.Text = self.Fig.text(x=num, y=3500, text=text, text_font_size="200px", text_align="center", text_baseline="middle", angle=0, text_color="blue")
 
     def __init__(self, source):
 
@@ -27,21 +34,31 @@ class ecgModule:
         self.Fig.title.text_font_size = "40px"
         heartRates = "Heart Rates: Normal: 60-100 bpm, Tachycardia: >100 bpm, Bradycardia: <60 bpm"
         self.Fig.add_layout(Title(text=heartRates, align="center"), "below")
-        N = 9
-        text = [str(random.randint(0, N))]
-        #source2 = ColumnDataSource(dict(x=x, y=y, text=text))
-        #glyph = Text(x="x", y="y", text="text", text_font_size="100px", text_align="center", text_baseline="middle", angle=0, text_color="#96deb3")
-        #self.Plot = self.Fig.text(x=300, y=300, text="text", text_font_size="100px", text_align="center", text_baseline="middle", angle=0, text_color="#96deb3")
-        #print("plotted")
-        #self.Plot = self.Fig.add_glyph(Text(x=200, y=200, text=text, text_font_size="20px", text_align="right", text_baseline="middle", angle=0, text_color="#96deb3"))
-        # DEFINE PLOT
+        
         # ----------------------------------------------------------------------
         
         #plot is created using source data thats passedS when class is called
         self.Plot = self.Fig.line(x='ecg_x', y='ecg_y', source=source, \
                               color='#FB9A99', line_width = 2)
-        print("line")
-        self.Plot = self.Fig.text(x=300, y=300, text="text", text_font_size="200px", text_align="center", text_baseline="middle", angle=0, text_color="blue")
-        print("plotted")
+   
+        num = 300
+        N = 9
+        text = [str(random.randint(0, N))]
+        #self.Text = self.Fig.text(x=num, y=3500, text=text, text_font_size="200px", text_align="center", text_baseline="middle", angle=0, text_color="blue")
+        curdoc().add_periodic_callback(self.add_text(num), 2000)
+        #num = num + 100
+
+        """
+        self.add_text(num)
+        num = num + 200
+        self.add_text(num)
+        """
+        """
+        while True:
+            self.add_text(num)
+            time.sleep(60)
+            num = num + 100
+        """    
+        
         
         
