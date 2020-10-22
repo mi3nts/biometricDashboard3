@@ -6,14 +6,17 @@
 # MULTI-SCALE INTEGRATED REMOTE SENSING AND SIMULATION (MINTS)
 
 # import functions
-from getStream import getStream
-from mkColumnDataSource import mkColumnDataSource
+from functions.getStream import getStream
+from functions.mkColumnDataSources import mkColumnDataSources
+from functions.QRSDetectorOnline import QRSDetectorOnline
 
 # import visualization modules
 from modules.eegModule import eegModule
 from modules.ecgModule import ecgModule
 from modules.spo2Module import spo2Module
 from modules.gsrModule import gsrModule
+from modules.hrvModule import hrvModule
+from modules.respModule import respModule
 
 # import bokeh modules
 from bokeh.plotting import curdoc, figure
@@ -32,9 +35,12 @@ import numpy as np
 # get data stream
 inlet = getStream(0)
 
+# initialize QRS detector
+ecg_processing = QRSDetectorOnline()
+
 # CREATE BOKEH DATA STRUCTURE TO EFFICENTLY STORE AND UPDATE DATA
 # ------------------------------------------------------------------------------
-source = mkColumnDataSource()
+source, source_num = mkColumnDataSources()
 
 # DEFINE DOCUMENT OBJECT
 # ------------------------------------------------------------------------------
@@ -54,7 +60,7 @@ eeg_31, eeg_32, eeg_33, eeg_34, eeg_35, eeg_36, eeg_37, eeg_38, eeg_39, eeg_40,\
 eeg_41, eeg_42, eeg_43, eeg_44, eeg_45, eeg_46, eeg_47, eeg_48, eeg_49, eeg_50, \
 eeg_51, eeg_52, eeg_53, eeg_54, eeg_55, eeg_56, eeg_57, eeg_58, eeg_59, eeg_60, \
 eeg_61, eeg_62, eeg_63, eeg_64,\
-ecg_x, ecg_y, spo2, gsr):
+ecg_x, ecg_y):
 
     source.stream(dict(eeg_1=[eeg_1], eeg_2=[eeg_2], \
     eeg_3=[eeg_3], eeg_4=[eeg_4], eeg_5=[eeg_5], eeg_6=[eeg_6], eeg_7=[eeg_7], \
@@ -70,8 +76,15 @@ ecg_x, ecg_y, spo2, gsr):
     eeg_53=[eeg_53], eeg_54=[eeg_54], eeg_55=[eeg_55], eeg_56=[eeg_56], eeg_57=[eeg_57], \
     eeg_58=[eeg_58], eeg_59=[eeg_59], eeg_60=[eeg_60], eeg_61=[eeg_61], eeg_62=[eeg_62], \
     eeg_63=[eeg_63], eeg_64=[eeg_64], \
-    ecg_x=[ecg_x], ecg_y=[ecg_y], \
-    spo2=[spo2], gsr=[gsr]), rollover=1500)
+    ecg_x=[ecg_x], ecg_y=[ecg_y]), rollover=750)
+
+@gen.coroutine
+def update_num(num_x, num_y, spo2, gsr, hrv, rr, hr_x, hr_y, hr):
+
+    source_num.stream(dict(num_x=[num_x], num_y=[num_y], \
+    spo2=[spo2], gsr=[gsr], hrv=[hrv], rr=[rr], \
+    hr_x=[hr_x], hr_y=[hr_y], hr=[hr]), rollover=1)
+
 
 def blocking_task():
     while True:
@@ -100,13 +113,31 @@ def blocking_task():
         eeg_59, eeg_60, eeg_61, eeg_62, eeg_63, eeg_64 = np.zeros([64,1])
 
         # append ecg data
-        ecg_x, ecg_y = i, sample[68]
+        ecg_x, ecg_y = i, -sample[68]+6000
 
-        # append spo2 data
-        spo2 = 0;
+        # define position and value for hr
+        hr_x = i-24
+        if i<25:
+            hr_x=1
+        hr_y = 3800
+        hr = 'HR=' + str(round(sample[72]))
 
-        # append gsr data
-        gsr = 0;
+        # compute currnt hrv
+        measurements = ecg_processing.process_measurement(ecg_y)
+        # if hrv is nan set it as 0
+        if np.isnan(measurements['rmssd']):
+            measurements['rmssd'] = 0
+
+        # update number box visualizations
+        num_x=1
+        num_y=1
+
+        spo2 = str(round(sample[71]))
+        gsr = str(round(sample[73]))
+        hrv = str(round(measurements['rmssd']))
+        rr = str(round(sample[69]))
+
+
 
         # but update the document from callback
         doc.add_next_tick_callback(partial(update, eeg_1=eeg_1, eeg_2=eeg_2, \
@@ -123,22 +154,26 @@ def blocking_task():
         eeg_53=eeg_53, eeg_54=eeg_54, eeg_55=eeg_55, eeg_56=eeg_56, eeg_57=eeg_57, \
         eeg_58=eeg_58, eeg_59=eeg_59, eeg_60=eeg_60, eeg_61=eeg_61, eeg_62=eeg_62, \
         eeg_63=eeg_63, eeg_64=eeg_64, \
-        ecg_x=ecg_x, ecg_y=ecg_y, \
-        spo2=spo2, gsr=gsr))
+        ecg_x=ecg_x, ecg_y=ecg_y))
+
+        # but update the document from callback
+        doc.add_next_tick_callback(partial(update_num, num_x=num_x, num_y=num_y, \
+        spo2=spo2, gsr=gsr, hrv=hrv, rr=rr, hr_x=hr_x, hr_y=hr_y, hr=hr))
 
 
 # DEFINE VISUALIZATION MODULES
 # ------------------------------------------------------------------------------
 eeg = eegModule()
-ecg = ecgModule(source)
-spo2 = spo2Module()
-gsr = gsrModule()
+ecg = ecgModule(source, source_num)
+spo2 = spo2Module(source_num)
+gsr = gsrModule(source_num)
+hrv = hrvModule(source_num)
+resp = respModule(source_num)
 
 # CREATE LAYOUT
 # ------------------------------------------------------------------------------
 p = column(row(eeg.DeltaFig, eeg.ThetaFig, eeg.AlphaFig, eeg.TotalFig), \
-           row(ecg.Fig, column(spo2.Fig, gsr.Fig)))
-
+           row(ecg.Fig, column(hrv.Fig, resp.Fig, spo2.Fig, gsr.Fig)))
 
 # MAKE PLOT THE ROOT OF DOCUMENT
 # ------------------------------------------------------------------------------
