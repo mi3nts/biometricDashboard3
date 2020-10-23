@@ -4,7 +4,7 @@
 
 ### Quick Summary
 
-This module dynamically displays numbers that are provided from the streaming layer. The numbers are updated every 2 seconds based on the latest data received from the streaming layer. It's implemented through python and visualization is done through bokeh, which takes care of the HTML and JS.
+This module dynamically displays numbers that are provided from the streaming layer. The numbers are updated every 3 seconds based on the latest data received from the streaming layer. It's implemented through python and visualization is done through bokeh, which takes care of the HTML and JS.
 
 ### How to Run
 
@@ -17,7 +17,7 @@ This module dynamically displays numbers that are provided from the streaming la
 
 #### Main function:
 
-The main function calls the clear_plot function first to clear the bokeh plot and then immediately calls the add_text function to add the latest received number. It calls these functions through a bokeh method called add_periodic_callback which specifies to call these functions in 2 second increments.
+The main function calls the clear_plot function first to clear the bokeh plot and then immediately calls the add_text function to add the latest received number. It calls these functions through a bokeh method called add_periodic_callback which specifies to call these functions in 3 second increments.
 
 #### clear_plot function:
 
