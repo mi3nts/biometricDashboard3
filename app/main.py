@@ -85,7 +85,10 @@ def update_num(num_x, num_y, spo2, gsr, hrv, rr, hr_x, hr_y, hr):
     spo2=[spo2], gsr=[gsr], hrv=[hrv], rr=[rr], \
     hr_x=[hr_x], hr_y=[hr_y], hr=[hr]), rollover=1)
 
-
+@gen.coroutine
+def update_eeg(i, source):
+    eeg.visualize(i, source)
+    
 def blocking_task():
     while True:
         global i
@@ -110,7 +113,7 @@ def blocking_task():
         eeg_41, eeg_42, eeg_43, eeg_44, eeg_45, eeg_46,\
         eeg_47, eeg_48, eeg_49, eeg_50, eeg_51, eeg_52,\
         eeg_53, eeg_54, eeg_55, eeg_56, eeg_57, eeg_58,\
-        eeg_59, eeg_60, eeg_61, eeg_62, eeg_63, eeg_64 = np.zeros([64,1])
+        eeg_59, eeg_60, eeg_61, eeg_62, eeg_63, eeg_64 = sample[0:64]
 
         # append ecg data
         ecg_x, ecg_y = i, -sample[68]+6000
@@ -137,8 +140,6 @@ def blocking_task():
         hrv = str(round(measurements['rmssd']))
         rr = str(round(sample[69]))
 
-
-
         # but update the document from callback
         doc.add_next_tick_callback(partial(update, eeg_1=eeg_1, eeg_2=eeg_2, \
         eeg_3=eeg_3, eeg_4=eeg_4, eeg_5=eeg_5, eeg_6=eeg_6, eeg_7=eeg_7, \
@@ -159,6 +160,9 @@ def blocking_task():
         # but update the document from callback
         doc.add_next_tick_callback(partial(update_num, num_x=num_x, num_y=num_y, \
         spo2=spo2, gsr=gsr, hrv=hrv, rr=rr, hr_x=hr_x, hr_y=hr_y, hr=hr))
+        
+        # but update the document from callback
+        doc.add_next_tick_callback(partial(update_eeg, i=i, source=source))
 
 
 # DEFINE VISUALIZATION MODULES
@@ -186,3 +190,5 @@ doc.add_root(p)
 thread = Thread(target=blocking_task)
 # start thread
 thread.start()
+
+
