@@ -19,7 +19,7 @@ class ecgModule:
          print("called")
          self.Text = self.Fig.text(x=num, y=3500, text=text, text_font_size="200px", text_align="center", text_baseline="middle", angle=0, text_color="blue")
 
-    def __init__(self, source):
+    def __init__(self, source, source_num):
 
         # DEFINE FIGURE
         # ----------------------------------------------------------------------
@@ -28,6 +28,7 @@ class ecgModule:
         self.Fig = figure(plot_width=900, plot_height=600, y_range = [2000, 4000], tools="hover")
         self.Fig.xaxis.axis_label = 'Time Index'
         self.Fig.yaxis.axis_label = 'ECG (uV)'
+<<<<<<< HEAD
         # configure visual properties on a plot's title attribute
         self.Fig.title.text = "Realtime ECG"
         self.Fig.title.align = "center"
@@ -35,11 +36,21 @@ class ecgModule:
         heartRates = "Heart Rates: Normal: 60-100 bpm, Tachycardia: >100 bpm, Bradycardia: <60 bpm"
         self.Fig.add_layout(Title(text=heartRates, align="center"), "below")
         
+=======
+
+        # configure visual properties on a plot's title attribute
+        self.Fig.title.text = "Realtime ECG"
+        self.Fig.title.align = "center"
+        self.Fig.title.text_font_size = "30px"
+
+        # DEFINE PLOT
+>>>>>>> e7ef14f96a5fe4d3b75b285bef2811aa3160aec7
         # ----------------------------------------------------------------------
         
         #plot is created using source data thats passedS when class is called
         self.Plot = self.Fig.line(x='ecg_x', y='ecg_y', source=source, \
                               color='#FB9A99', line_width = 2)
+<<<<<<< HEAD
    
         num = 300
         N = 9
@@ -62,3 +73,8 @@ class ecgModule:
         
         
         
+=======
+
+        self.Text = self.Fig.text(x="hr_x", y="hr_y", text="hr", source=source_num, \
+        text_font_size="30px", text_align="center", text_baseline="middle", text_color="#FF0000")
+>>>>>>> e7ef14f96a5fe4d3b75b285bef2811aa3160aec7
