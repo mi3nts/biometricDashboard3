@@ -24,6 +24,15 @@ class hrvModule:
         self.Fig.yaxis.minor_tick_line_color = None  # turn off y-axis minor ticks
         self.Fig.border_fill_alpha = 1
 
+        # remove toolbar and Bokeh logo
+        self.Fig.toolbar.logo = None
+        self.Fig.toolbar_location = None
+
+        # add border to visualization
+        self.Fig.outline_line_width = 1
+        self.Fig.outline_line_alpha = 1
+        self.Fig.outline_line_color = "black"
+
         # DEFINE PLOT
         # ------------------------------------------------------------------------------
         self.Text = self.Fig.text(x="num_x", y="num_y", text="hrv", source=source_num,\
@@ -32,5 +41,8 @@ class hrvModule:
         # create title
         t = Title()
         t.text = 'HRV'
+
         # set title
         self.Fig.title = t
+        self.Fig.title.align = "center"
+        self.Fig.title.text_font_size = "20px"

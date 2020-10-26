@@ -13,7 +13,7 @@ class ecgModule:
 
         # DEFINE FIGURE
         # ----------------------------------------------------------------------
-        self.Fig = figure(plot_width=900, plot_height=600, y_range = [2000, 4000])
+        self.Fig = figure(plot_width=1050, plot_height=600, y_range = [2000, 4000])
         self.Fig.xaxis.axis_label = 'Time Index'
         self.Fig.yaxis.axis_label = 'ECG (uV)'
 
@@ -21,6 +21,10 @@ class ecgModule:
         self.Fig.title.text = "Realtime ECG"
         self.Fig.title.align = "center"
         self.Fig.title.text_font_size = "30px"
+
+        # remove toolbar and Bokeh logo
+        self.Fig.toolbar.logo = None
+        self.Fig.toolbar_location = None
 
         # DEFINE PLOT
         # ----------------------------------------------------------------------

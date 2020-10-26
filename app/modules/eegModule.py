@@ -7,17 +7,43 @@
 # import bokeh module
 from bokeh.plotting import figure
 
-
 class eegModule:
 
     def __init__(self):
 
         # DEFINE FIGURES
         # ------------------------------------------------------------------------------
-        self.DeltaFig = figure(plot_width=300, plot_height=300)
-        self.ThetaFig = figure(plot_width=300, plot_height=300)
-        self.AlphaFig = figure(plot_width=300, plot_height=300)
-        self.TotalFig = figure(plot_width=300, plot_height=300)
+        self.DeltaFig = figure(plot_width=350, plot_height=350)
+        self.ThetaFig = figure(plot_width=350, plot_height=350)
+        self.AlphaFig = figure(plot_width=350, plot_height=350)
+        self.TotalFig = figure(plot_width=350, plot_height=350)
+
+        # remove toolbars and Bokeh logo
+        self.DeltaFig.toolbar.logo = None
+        self.DeltaFig.toolbar_location = None
+        self.ThetaFig.toolbar.logo = None
+        self.ThetaFig.toolbar_location = None
+        self.AlphaFig.toolbar.logo = None
+        self.AlphaFig.toolbar_location = None
+        self.TotalFig.toolbar.logo = None
+        self.TotalFig.toolbar_location = None
+
+        # add border to visualizations
+        self.DeltaFig.outline_line_width = 1
+        self.DeltaFig.outline_line_alpha = 1
+        self.DeltaFig.outline_line_color = "black"
+
+        self.ThetaFig.outline_line_width = 1
+        self.ThetaFig.outline_line_alpha = 1
+        self.ThetaFig.outline_line_color = "black"
+
+        self.AlphaFig.outline_line_width = 1
+        self.AlphaFig.outline_line_alpha = 1
+        self.AlphaFig.outline_line_color = "black"
+
+        self.TotalFig.outline_line_width = 1
+        self.TotalFig.outline_line_alpha = 1
+        self.TotalFig.outline_line_color = "black"
 
         # DEFINE PLOTS
         # ------------------------------------------------------------------------------
