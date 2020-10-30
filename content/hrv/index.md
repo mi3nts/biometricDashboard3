@@ -5,5 +5,5 @@ bg = "bg-gradient-white"
 +++
 <!-- : .wrap -->
 
-## **HRV**
+## **Heart Rate Variability**
 (INSERT HRV STUFF)
