@@ -4,6 +4,12 @@
 # THE UNIVERSITY OF TEXAS AT DALLAS
 # MULTI-SCALE INTEGRATED REMOTE SENSING AND SIMULATION (MINTS)
 
+# EEG MODULE
+
+# CODE AUTHORED BY: SHAWHIN TALEBI
+# THE UNIVERSITY OF TEXAS AT DALLAS
+# MULTI-SCALE INTEGRATED REMOTE SENSING AND SIMULATION (MINTS)
+
 # import bokeh module
 from bokeh.plotting import figure
 from bokeh.models import ColumnDataSource
@@ -16,29 +22,40 @@ import matplotlib.pyplot as plt
 class eegModule:
 
     def __init__(self):
-
+        
         # DEFINE FIGURES
         # ------------------------------------------------------------------------------
-        
-        self.DeltaFig = figure(plot_width=350, plot_height=350, title='Delta Frequency Band EEG')
-        self.DeltaFig.xgrid.grid_line_color = None
-        self.DeltaFig.ygrid.grid_line_color = None
-        self.DeltaFig.axis.visible = False
-        
-        self.ThetaFig = figure(plot_width=350, plot_height=350, title='Theta Frequency Band EEG')
-        self.ThetaFig.xgrid.grid_line_color = None
-        self.ThetaFig.ygrid.grid_line_color = None
-        self.ThetaFig.axis.visible = False
-        
-        self.AlphaFig = figure(plot_width=350, plot_height=350, title='Alpha Frequency Band EEG')
-        self.AlphaFig.xgrid.grid_line_color = None
-        self.AlphaFig.ygrid.grid_line_color = None
-        self.AlphaFig.axis.visible = False
-        
-        self.TotalFig = figure(plot_width=350, plot_height=350, title='Total Frequency Band EEG')
-        self.TotalFig.xgrid.grid_line_color = None
-        self.TotalFig.ygrid.grid_line_color = None
-        self.TotalFig.axis.visible = False
+        self.DeltaFig = figure(plot_width=350, plot_height=350)
+        self.ThetaFig = figure(plot_width=350, plot_height=350)
+        self.AlphaFig = figure(plot_width=350, plot_height=350)
+        self.TotalFig = figure(plot_width=350, plot_height=350)
+
+        # remove toolbars and Bokeh logo
+        self.DeltaFig.toolbar.logo = None
+        self.DeltaFig.toolbar_location = None
+        self.ThetaFig.toolbar.logo = None
+        self.ThetaFig.toolbar_location = None
+        self.AlphaFig.toolbar.logo = None
+        self.AlphaFig.toolbar_location = None
+        self.TotalFig.toolbar.logo = None
+        self.TotalFig.toolbar_location = None
+
+        # add border to visualizations
+        self.DeltaFig.outline_line_width = 1
+        self.DeltaFig.outline_line_alpha = 1
+        self.DeltaFig.outline_line_color = "black"
+
+        self.ThetaFig.outline_line_width = 1
+        self.ThetaFig.outline_line_alpha = 1
+        self.ThetaFig.outline_line_color = "black"
+
+        self.AlphaFig.outline_line_width = 1
+        self.AlphaFig.outline_line_alpha = 1
+        self.AlphaFig.outline_line_color = "black"
+
+        self.TotalFig.outline_line_width = 1
+        self.TotalFig.outline_line_alpha = 1
+        self.TotalFig.outline_line_color = "black"
         
         # DEFINE VARIABLES
         # ------------------------------------------------------------------------------
@@ -61,15 +78,15 @@ class eegModule:
         self.evoked = mne.EvokedArray(self.eeg_data, self.info) # evoked structure for plotting topomaps
         
         # column data source for updating document
-        self.source = ColumnDataSource({'delta_array': [], 
+        self.source_images = ColumnDataSource({'delta_array': [], 
                                         'theta_array': [],
                                         'alpha_array': [], 
                                         'total_array': []})
         
-        self.DeltaFig.image_rgba(image='delta_array', x=0, y=0, dw=350, dh=350, source=self.source)
-        self.ThetaFig.image_rgba(image='theta_array', x=0, y=0, dw=350, dh=350, source=self.source)
-        self.AlphaFig.image_rgba(image='alpha_array', x=0, y=0, dw=350, dh=350, source=self.source)
-        self.TotalFig.image_rgba(image='total_array', x=0, y=0, dw=350, dh=350, source=self.source)
+        self.DeltaFig.image_rgba(image='delta_array', x=0, y=0, dw=350, dh=350, source=self.source_images)
+        self.ThetaFig.image_rgba(image='theta_array', x=0, y=0, dw=350, dh=350, source=self.source_images)
+        self.AlphaFig.image_rgba(image='alpha_array', x=0, y=0, dw=350, dh=350, source=self.source_images)
+        self.TotalFig.image_rgba(image='total_array', x=0, y=0, dw=350, dh=350, source=self.source_images)
     
     def getFreqBandOrValue(self, data, new_data, freq_value, global_max):
         # delete first row
@@ -119,7 +136,7 @@ class eegModule:
         
         # temp holds mean of each row in extractAmplitude
         temp = np.mean(temp, axis=1)
-        
+            
         # calculate the maximum of the two values - called local_max
         local_max = max(np.amax(temp), global_max)
     
@@ -153,50 +170,41 @@ class eegModule:
         X = np.asarray(buf, dtype=np.uint8)
 
         return X
-    
+        
     def visualize(self, i, source):
-        # get data from column data source
-        s = [source.data['eeg_1'], source.data['eeg_2'], source.data['eeg_3'],
-                       source.data['eeg_4'], source.data['eeg_5'], source.data['eeg_6'],
-                       source.data['eeg_7'], source.data['eeg_8'], source.data['eeg_9'],
-                       source.data['eeg_10'], source.data['eeg_11'], source.data['eeg_12'],
-                       source.data['eeg_13'], source.data['eeg_14'], source.data['eeg_15'],
-                       source.data['eeg_16'], source.data['eeg_17'], source.data['eeg_18'],
-                       source.data['eeg_19'], source.data['eeg_20'], source.data['eeg_21'],
-                       source.data['eeg_22'], source.data['eeg_23'], source.data['eeg_24'],
-                       source.data['eeg_25'], source.data['eeg_26'], source.data['eeg_27'],
-                       source.data['eeg_28'], source.data['eeg_29'], source.data['eeg_30'],
-                       source.data['eeg_31'], source.data['eeg_32'], source.data['eeg_33'],
-                       source.data['eeg_34'], source.data['eeg_35'], source.data['eeg_36'],
-                       source.data['eeg_37'], source.data['eeg_38'], source.data['eeg_39'],
-                       source.data['eeg_40'], source.data['eeg_41'], source.data['eeg_42'],
-                       source.data['eeg_43'], source.data['eeg_44'], source.data['eeg_45'],
-                       source.data['eeg_46'], source.data['eeg_47'], source.data['eeg_48'],
-                       source.data['eeg_49'], source.data['eeg_50'], source.data['eeg_51'],
-                       source.data['eeg_52'], source.data['eeg_53'], source.data['eeg_54'],
-                       source.data['eeg_55'], source.data['eeg_56'], source.data['eeg_57'],
-                       source.data['eeg_58'], source.data['eeg_59'], source.data['eeg_60'],
-                       source.data['eeg_61'], source.data['eeg_62'], source.data['eeg_63'],
-                       source.data['eeg_64'] ]
-        
-        
         # get sample data from column data source
-        sample_data = []
-        
-        for data in s:
-            # append last value fetched for each eeg sensor
-            val = data[len(data) - 1] 
-            sample_data += [val]
-        
+        sample_data = [source.data['eeg_1'][0], source.data['eeg_2'][0], source.data['eeg_3'][0],
+                       source.data['eeg_4'][0], source.data['eeg_5'][0], source.data['eeg_6'][0],
+                       source.data['eeg_7'][0], source.data['eeg_8'][0], source.data['eeg_9'][0],
+                       source.data['eeg_10'][0], source.data['eeg_11'][0], source.data['eeg_12'][0],
+                       source.data['eeg_13'][0], source.data['eeg_14'][0], source.data['eeg_15'][0],
+                       source.data['eeg_16'][0], source.data['eeg_17'][0], source.data['eeg_18'][0],
+                       source.data['eeg_19'][0], source.data['eeg_20'][0], source.data['eeg_21'][0],
+                       source.data['eeg_22'][0], source.data['eeg_23'][0], source.data['eeg_24'][0],
+                       source.data['eeg_25'][0], source.data['eeg_26'][0], source.data['eeg_27'][0],
+                       source.data['eeg_28'][0], source.data['eeg_29'][0], source.data['eeg_30'][0],
+                       source.data['eeg_31'][0], source.data['eeg_32'][0], source.data['eeg_33'][0],
+                       source.data['eeg_34'][0], source.data['eeg_35'][0], source.data['eeg_36'][0],
+                       source.data['eeg_37'][0], source.data['eeg_38'][0], source.data['eeg_39'][0],
+                       source.data['eeg_40'][0], source.data['eeg_41'][0], source.data['eeg_42'][0],
+                       source.data['eeg_43'][0], source.data['eeg_44'][0], source.data['eeg_45'][0],
+                       source.data['eeg_46'][0], source.data['eeg_47'][0], source.data['eeg_48'][0],
+                       source.data['eeg_49'][0], source.data['eeg_50'][0], source.data['eeg_51'][0],
+                       source.data['eeg_52'][0], source.data['eeg_53'][0], source.data['eeg_54'][0],
+                       source.data['eeg_55'][0], source.data['eeg_56'][0], source.data['eeg_57'][0],
+                       source.data['eeg_58'][0], source.data['eeg_59'][0], source.data['eeg_60'][0],
+                       source.data['eeg_61'][0], source.data['eeg_62'][0], source.data['eeg_63'][0],
+                       source.data['eeg_64'][0] ]
+
         if i < 64: # add eeg data to array
             self.eeg_data[i] = sample_data
         else: # start plotting 
             #store in temp so we can get the updated data and max for later use
             temp = self.getFreqBandOrValue(self.eeg_data, sample_data, -1, self.global_max) 
-            
+
             delta_band = temp[0]   
-            theta_band = self.getFreqBandOrValue(self.eeg_data, sample_data, -2, 1)[0]
-            alpha_band = self.getFreqBandOrValue(self.eeg_data, sample_data, -3, 1)[0]
+            theta_band = self.getFreqBandOrValue(self.eeg_data, sample_data, -2, self.global_max)[0]
+            alpha_band = self.getFreqBandOrValue(self.eeg_data, sample_data, -3, self.global_max)[0]
             
             # get total band
             total_band = np.add(delta_band, theta_band)
@@ -208,7 +216,7 @@ class eegModule:
                                               cmap='jet', colorbar=False, size = 3, sensors='kX', show=False)
             
             delta_array = self.getImageArray(figure_delta) # get figure as image array to plot
-                                               
+
             self.evoked.data = np.transpose([theta_band])  # set evoked's data to theta band
             # plot theta band topo map and store result which is a matplotlib figure
             figure_theta = self.evoked.plot_topomap(times=[0], ch_type='eeg', time_format='', extrapolate='head', 
@@ -231,11 +239,10 @@ class eegModule:
             total_array = self.getImageArray(figure_total) # get figure as image array to plot
             
             # update column data source with updated image arrays for plots on document
-            self.source.data['delta_array'] = [np.flipud(delta_array)]
-            self.source.data['theta_array'] = [np.flipud(theta_array)]
-            self.source.data['alpha_array'] = [np.flipud(alpha_array)]
-            self.source.data['total_array'] = [np.flipud(total_array)]
-
+            self.source_images.data['delta_array'] = [np.flipud(delta_array)]
+            self.source_images.data['theta_array'] = [np.flipud(theta_array)]
+            self.source_images.data['alpha_array'] = [np.flipud(alpha_array)]
+            self.source_images.data['total_array'] = [np.flipud(total_array)]
             
             # close matplotlib figure
             plt.close(figure_delta)
@@ -243,11 +250,13 @@ class eegModule:
             plt.close(figure_theta)
             # close matplotlib figure)
             plt.close(figure_alpha)
-            # close matplotlib figure)
+            # close matplotlib figure
             plt.close(figure_total)
             
             self.eeg_data = np.transpose(temp[2]) # update eeg array to get new data
+
             m = temp[1] # get max to compare with global max
-            
+
             if self.global_max < m: # check to see if global max needs to be updated
                 self.global_max = m
+                
