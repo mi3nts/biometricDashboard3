@@ -22,6 +22,7 @@ from modules.respModule import respModule
 from bokeh.plotting import curdoc, figure
 from bokeh.models import Text, Plot
 from bokeh.layouts import column, row
+from bokeh.document import without_document_lock
 
 # # import other modules
 from functools import partial
@@ -32,7 +33,8 @@ import numpy as np
 
 # RESOLVE INLET
 # ------------------------------------------------------------------------------
-# get data stream
+# get data stream  
+# allows program to recieve data from SendData4.py
 inlet = getStream(0)
 
 # initialize QRS detector
@@ -40,18 +42,36 @@ ecg_processing = QRSDetectorOnline()
 
 # CREATE BOKEH DATA STRUCTURE TO EFFICENTLY STORE AND UPDATE DATA
 # ------------------------------------------------------------------------------
+<<<<<<< HEAD
+# sets source to a dictionary of the data 
+source = mkColumnDataSource()
+=======
 source, source_num = mkColumnDataSources()
+>>>>>>> e7ef14f96a5fe4d3b75b285bef2811aa3160aec7
 
 # DEFINE DOCUMENT OBJECT
 # ------------------------------------------------------------------------------
 # This is important! Save curdoc() to make sure all threads see the same
 # document.
+
+# currdoc --> "current documnet" page that holds all visualizations 
 doc = curdoc()
 
 i=0 # initialize x index
 
 # DEFINE FUNCTIONS TO GET REAL TIME DATA
 # ------------------------------------------------------------------------------
+# allows data to be recieved/updated while other tasks are being ran 
+# allows program to contionously get data from data stream 
+
+"""
+@without_document_lock
+@gen.coroutine
+def updateHR(hr):
+    source.stream(dict(hr=[hr]))
+"""
+
+#@without_document_lock
 @gen.coroutine
 def update(eeg_1, eeg_2, eeg_3, eeg_4, eeg_5, eeg_6, eeg_7, eeg_8, eeg_9, eeg_10,\
 eeg_11, eeg_12, eeg_13, eeg_14, eeg_15, eeg_16,eeg_17, eeg_18, eeg_19, eeg_20, \
@@ -76,6 +96,10 @@ ecg_x, ecg_y):
     eeg_53=[eeg_53], eeg_54=[eeg_54], eeg_55=[eeg_55], eeg_56=[eeg_56], eeg_57=[eeg_57], \
     eeg_58=[eeg_58], eeg_59=[eeg_59], eeg_60=[eeg_60], eeg_61=[eeg_61], eeg_62=[eeg_62], \
     eeg_63=[eeg_63], eeg_64=[eeg_64], \
+<<<<<<< HEAD
+    ecg_x=[ecg_x], ecg_y=[ecg_y],  \
+    spo2=[spo2], gsr=[gsr]), rollover=1500)
+=======
     ecg_x=[ecg_x], ecg_y=[ecg_y]), rollover=750)
 
 @gen.coroutine
@@ -85,6 +109,7 @@ def update_num(num_x, num_y, spo2, gsr, hrv, rr, hr_x, hr_y, hr):
     spo2=[spo2], gsr=[gsr], hrv=[hrv], rr=[rr], \
     hr_x=[hr_x], hr_y=[hr_y], hr=[hr]), rollover=1)
 
+>>>>>>> e7ef14f96a5fe4d3b75b285bef2811aa3160aec7
 
 def blocking_task():
     while True:
@@ -137,6 +162,14 @@ def blocking_task():
         hrv = str(round(measurements['rmssd']))
         rr = str(round(sample[69]))
 
+<<<<<<< HEAD
+        hr = sample[72]
+
+        # append spo2 data
+        spo2 = 0;
+=======
+>>>>>>> e7ef14f96a5fe4d3b75b285bef2811aa3160aec7
+
 
 
         # but update the document from callback
@@ -160,6 +193,7 @@ def blocking_task():
         doc.add_next_tick_callback(partial(update_num, num_x=num_x, num_y=num_y, \
         spo2=spo2, gsr=gsr, hrv=hrv, rr=rr, hr_x=hr_x, hr_y=hr_y, hr=hr))
 
+        #doc.add_periodic_callback(partial(updateHR, hr = hr), 20000)
 
 # DEFINE VISUALIZATION MODULES
 # ------------------------------------------------------------------------------
@@ -183,6 +217,7 @@ doc.add_root(p)
 # more info here: https://docs.python.org/2/library/threading.html#thread-objects
 # ------------------------------------------------------------------------------
 # create thread that calls the target
+# allows for bokeh to continously update the visualization 
 thread = Thread(target=blocking_task)
 # start thread
 thread.start()
