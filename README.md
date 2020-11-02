@@ -13,7 +13,7 @@ An ECG can be analyzed by studying the components of the waveform. The first ini
 - Rest: 60-100 bpm
 - Walking: 110-120 bpm
 - Exercise is the best way to both lower your resting heart rate and increase your maximum heart rate and aerobic capacity
--Heart Rate Conditions 
+- Heart Rate Conditions: 
   -Normal: 60-100 bpm
   -Tachycardia: > 100 bpm
   -Bradycardia: < 60 bpm
