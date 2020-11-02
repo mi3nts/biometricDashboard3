@@ -9,9 +9,9 @@ An ECG can be analyzed by studying the components of the waveform. The first ini
 - Maximum heart rate = 220 – age
 - Moderate exercise intensity: 50% to about 70% of your maximum heart rate
 - Vigorous exercise intensity: 70% to about 85% of your maximum heart rate
-  -- Sleep: 40-50 bpm
-  -- Rest: 60-100 bpm
-  -- Walking: 110-120 bpm
+- Sleep: 40-50 bpm
+- Rest: 60-100 bpm
+- Walking: 110-120 bpm
 - Exercise is the best way to both lower your resting heart rate and increase your maximum heart rate and aerobic capacity
 -Heart Rate Conditions 
   -Normal: 60-100 bpm
