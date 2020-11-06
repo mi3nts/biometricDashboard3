@@ -76,6 +76,8 @@ eeg_61, eeg_62, eeg_63, eeg_64):
     eeg_58=[eeg_58], eeg_59=[eeg_59], eeg_60=[eeg_60], eeg_61=[eeg_61], eeg_62=[eeg_62], \
     eeg_63=[eeg_63], eeg_64=[eeg_64]), rollover=1)
 
+    eeg.visualize(i, source_eeg)
+
 @gen.coroutine
 def update_ecg(ecg_x, ecg_y):
 
@@ -175,7 +177,7 @@ resp = respModule(source_num)
 
 # CREATE LAYOUT
 # ------------------------------------------------------------------------------
-p = column(row(eeg.DeltaFig, eeg.ThetaFig, eeg.AlphaFig, eeg.TotalFig), \
+p = column(row(Spacer(width=300),eeg.AlphaFig, Spacer(width=200), eeg.TotalFig, Spacer(width=300)), \
            row(ecg.Fig, Spacer(width=125), column(hrv.Fig, resp.Fig, spo2.Fig, gsr.Fig)))
 
 # MAKE PLOT THE ROOT OF DOCUMENT

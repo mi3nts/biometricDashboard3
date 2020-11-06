@@ -7,6 +7,7 @@
 # import bokeh module
 from bokeh.plotting import figure
 from bokeh.models.annotations import Title
+from bokeh.models import HoverTool
 
 class gsrModule:
 
@@ -32,6 +33,12 @@ class gsrModule:
         self.Fig.outline_line_width = 1
         self.Fig.outline_line_alpha = 1
         self.Fig.outline_line_color = "black"
+
+        self.Fig.add_tools(HoverTool(
+        tooltips=[
+            ("GSR","refers to changes in sweat gland activity")
+        ]
+        ))
 
         # DEFINE PLOT
         # ------------------------------------------------------------------------------

@@ -7,6 +7,7 @@
 # import bokeh module
 from bokeh.plotting import figure
 from bokeh.models.annotations import Title
+from bokeh.models import HoverTool
 
 class hrvModule:
 
@@ -33,6 +34,31 @@ class hrvModule:
         self.Fig.outline_line_alpha = 1
         self.Fig.outline_line_color = "black"
 
+        # create tooltip
+        # add tooltip
+        # self.Fig.add_tools(HoverTool(
+        #     tooltips=[
+        #         ("Age Range (years)", "HRV Range in rMSSD (ms)"),
+        #         ("10-19", "36-70"),
+        #         ("20-29", "24-62"),
+        #         ("30-99", "15-46")
+        #     ],
+        #     mode='vline'
+        # ))
+
+        self.Fig.add_tools(HoverTool(
+            tooltips=[
+                ("Age (Years)", "Normal Range"),
+                ("10-19", "36-70"),
+                ("20-29", "24-62"),
+                ("30-99", "15-46")
+            ],
+        ))
+
+        # TOOLTIPS = [
+        #     ]
+        # self.Fig = figure(plot_width=150, plot_height=150, tooltips=TOOLTIPS)
+
         # DEFINE PLOT
         # ------------------------------------------------------------------------------
         self.Text = self.Fig.text(x="num_x", y="num_y", text="hrv", source=source_num,\
@@ -40,7 +66,7 @@ class hrvModule:
 
         # create title
         t = Title()
-        t.text = 'HRV'
+        t.text = 'HRV (ms)'
 
         # set title
         self.Fig.title = t

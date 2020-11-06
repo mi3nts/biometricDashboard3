@@ -7,6 +7,7 @@
 # import bokeh module
 from bokeh.plotting import figure
 from bokeh.models.annotations import Title
+from bokeh.models import HoverTool
 
 class spo2Module:
 
@@ -32,6 +33,15 @@ class spo2Module:
         self.Fig.outline_line_width = 1
         self.Fig.outline_line_alpha = 1
         self.Fig.outline_line_color = "black"
+
+        self.Fig.add_tools(HoverTool(
+        tooltips=[
+            ("Normal", ">95%"),
+            ("Hypoxia", "<94%")
+        ]
+        ))
+
+
 
         # DEFINE PLOT
         # ------------------------------------------------------------------------------

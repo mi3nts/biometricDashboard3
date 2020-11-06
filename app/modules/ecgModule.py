@@ -1,11 +1,12 @@
 # ECG MODULE
 
-# CODE AUTHORED BY: SHAWHIN TALEBI
+# CODE AUTHORED BY: SHAWHIN TALEBI AND RYAN RAHMAN
 # THE UNIVERSITY OF TEXAS AT DALLAS
 # MULTI-SCALE INTEGRATED REMOTE SENSING AND SIMULATION (MINTS)
 
 # import bokeh module
 from bokeh.plotting import figure
+from bokeh.models import HoverTool
 
 class ecgModule:
 
@@ -25,6 +26,17 @@ class ecgModule:
         # remove toolbar and Bokeh logo
         self.Fig.toolbar.logo = None
         self.Fig.toolbar_location = None
+
+        # add tooltip
+        self.Fig.add_tools(HoverTool(
+            tooltips=[
+                ("Normal Heart Rate", "60-100 bpm"),
+                ("Tachycardia", ">100 bpm"),
+                ("Bradycardia", "<60 bpm")
+            ],
+            mode='vline'
+        ))
+
 
         # DEFINE PLOT
         # ----------------------------------------------------------------------
