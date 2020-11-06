@@ -23,6 +23,16 @@ bg = "bg-gradient-gray"
 <!--: .wrap -->
 
 ## **Biometric Dashboard**
-(INSERT PURPOSE OF PROJECT)
+<!-- : .text-intro -->The goal of this project was to process and visualize biometric signals in meaningful ways using modern visualization tooling.
+{{< div class="bg-white shadow" >}}
+<!-- : .flexblock reasons -->
+1. **Visualize Electrical Activity from the Brain** Visualizing Electroencephologram (EEG) signals helps researchers identify brain processes related to brain disorder, social interaction and anxiety, perception and intuition, etc.
+2. **Visualize Heart Activity and calculate Heart Rate Variability** Visualizing heart activity and calculating Heart Rate Variability (HRV) can help provide solid insights as to whether or not an individual is generally healthy.
+3. **Calculate and Display Respiration Rate** Using Electrocardiogram (ECG) signals, respiration rate can be accurately calculated. This measure can be used to detect abnormalities caused by illness as well as confirm overall health.
+4. **Provide a measure for Electrodermal Activity** Also known as Galvanic Skin Response (GSR). It measures skin conductance and can help identify the intensity of emotional arousal and cognitive load.
+5. **Display Oxygen Saturation Levels** Oxygen saturation levels are measured by finding peripheral capillary oxygen saturation (SpO2). SpO2 indicates how much oxygen is in the blood and can be used to determine how efficiently it is being carried to rest of the body.
+{{< /div >}}
+
+
 
 
