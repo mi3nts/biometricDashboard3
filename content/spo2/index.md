@@ -1,3 +1,12 @@
++++
+title = "GSR"
+weight = 2
+bg = "bg-gradient-white"
++++
+<!-- : .wrap -->
+
+## **GSR**
+
 ### Quick Summary
 
 Oxygen saturation is the fraction of oxygen-saturated hemoglobin relative to total hemoglobin (unsaturated + saturated) in the blood. The human body requires and regulates a very precise and specific balance of oxygen in the blood. Normal arterial blood oxygen saturation levels in humans are 95–100 percent. If the level is below 90 percent, it is considered low and called hypoxemia.
