@@ -27,9 +27,12 @@ class eegModule:
         # ------------------------------------------------------------------------------
         self.DeltaFig = figure(plot_width=350, plot_height=350)
         self.ThetaFig = figure(plot_width=350, plot_height=350)
-        self.AlphaFig = figure(plot_width=350, plot_height=350)
-        self.TotalFig = figure(plot_width=350, plot_height=350)
-
+        self.AlphaFig = figure(plot_width=350, plot_height=350, title='Alpha Band (8 - 12 Hz)')
+        self.TotalFig = figure(plot_width=350, plot_height=350, title='Total Power Band')
+        
+        self.AlphaFig.title.align = 'center'
+        self.TotalFig.title.align = 'center'
+        
         # remove toolbars and Bokeh logo
         self.DeltaFig.toolbar.logo = None
         self.DeltaFig.toolbar_location = None
@@ -52,10 +55,18 @@ class eegModule:
         self.AlphaFig.outline_line_width = 1
         self.AlphaFig.outline_line_alpha = 1
         self.AlphaFig.outline_line_color = "black"
+        self.AlphaFig.xaxis.visible = False
+        self.AlphaFig.yaxis.visible = False
+        self.AlphaFig.xgrid.visible = False
+        self.AlphaFig.ygrid.visible = False
 
         self.TotalFig.outline_line_width = 1
         self.TotalFig.outline_line_alpha = 1
         self.TotalFig.outline_line_color = "black"
+        self.TotalFig.xaxis.visible = False
+        self.TotalFig.yaxis.visible = False
+        self.TotalFig.xgrid.visible = False
+        self.TotalFig.ygrid.visible = False
         
         # DEFINE VARIABLES
         # ------------------------------------------------------------------------------
@@ -78,13 +89,12 @@ class eegModule:
         self.evoked = mne.EvokedArray(self.eeg_data, self.info) # evoked structure for plotting topomaps
         
         # column data source for updating document
-        self.source_images = ColumnDataSource({'delta_array': [], 
-                                        'theta_array': [],
+        self.source_images = ColumnDataSource({
                                         'alpha_array': [], 
                                         'total_array': []})
         
-        self.DeltaFig.image_rgba(image='delta_array', x=0, y=0, dw=350, dh=350, source=self.source_images)
-        self.ThetaFig.image_rgba(image='theta_array', x=0, y=0, dw=350, dh=350, source=self.source_images)
+        #self.DeltaFig.image_rgba(image='delta_array', x=0, y=0, dw=350, dh=350, source=self.source_images)
+        #self.ThetaFig.image_rgba(image='theta_array', x=0, y=0, dw=350, dh=350, source=self.source_images)
         self.AlphaFig.image_rgba(image='alpha_array', x=0, y=0, dw=350, dh=350, source=self.source_images)
         self.TotalFig.image_rgba(image='total_array', x=0, y=0, dw=350, dh=350, source=self.source_images)
     
@@ -210,6 +220,7 @@ class eegModule:
             total_band = np.add(delta_band, theta_band)
             total_band = np.add(total_band, alpha_band)
             
+            """
             self.evoked.data = np.transpose([delta_band]) # set evoked's data to delta band
             # plot delta band topo map and store result which is a matplotlib figure
             figure_delta = self.evoked.plot_topomap(times=[0], ch_type='eeg', time_format ='', extrapolate='head',
@@ -223,7 +234,7 @@ class eegModule:
                                               cmap='jet', colorbar=False, size=3, sensors='kX', show=False)
             
             theta_array = self.getImageArray(figure_theta) # get figure as image array to plot
-            
+            """
             self.evoked.data = np.transpose([alpha_band]) # set evoked's data to alpha band
             # plot alpha band topo map and store result which is a matplotlib figure
             figure_alpha = self.evoked.plot_topomap(times=[0], ch_type='eeg', time_format='', extrapolate='head',
@@ -239,15 +250,15 @@ class eegModule:
             total_array = self.getImageArray(figure_total) # get figure as image array to plot
             
             # update column data source with updated image arrays for plots on document
-            self.source_images.data['delta_array'] = [np.flipud(delta_array)]
-            self.source_images.data['theta_array'] = [np.flipud(theta_array)]
+            #self.source_images.data['delta_array'] = [np.flipud(delta_array)]
+            #self.source_images.data['theta_array'] = [np.flipud(theta_array)]
             self.source_images.data['alpha_array'] = [np.flipud(alpha_array)]
             self.source_images.data['total_array'] = [np.flipud(total_array)]
             
             # close matplotlib figure
-            plt.close(figure_delta)
+            #plt.close(figure_delta)
             # close matplotlib figure
-            plt.close(figure_theta)
+            #plt.close(figure_theta)
             # close matplotlib figure)
             plt.close(figure_alpha)
             # close matplotlib figure
