@@ -6,7 +6,6 @@ bg = "bg-gradient-white"
 <!-- : .wrap -->
 
 ## **GSR**
-(INSERT GSR STUFF)
 
 ### Quick Summary
 
