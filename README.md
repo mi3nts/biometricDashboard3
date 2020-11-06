@@ -1,9 +1,9 @@
 # biometricDashboard3
 # What is the ECG Module?
-The Electrocardiography(ECG) module shows the electrical signals in the heart over time. It provides information about heart rate and rhythm, and shows if there is enlargement of the heart due to high blood pressure (hypertension) or evidence of a previous heart attack (myocardial infarction). An ECG can also detect arrhythmias, which is when a heart beats too slowly, quickly, or irregularly. Additionally, the ECG can determine whether there's inadequate blood and oxygen supply to the heart. The module also will show the heart rate over time in a numerical fashion above the electrical signals line. 
+The Electrocardiography (ECG) module shows electrical signals in the heart over time. It provides information about heart rate and rhythm, and shows if there is enlargement of the heart due to high blood pressure (hypertension) or evidence of a previous heart attack (myocardial infarction). An ECG can also detect arrhythmias, which is when a heart beats too slowly, quickly, or irregularly. Additionally, ECG can determine whether there is inadequate blood and oxygen supply to the heart. The module also will show the heart rate over time in a numerical fashion above the electrical signal. 
 
 # What does the ECG Module show?
-An ECG can be analyzed by studying the components of the waveform. The first initial upward tracing is the p wave, which indicates atrial contraction. The QRS complex, which begins with a small downward deflection,Q, followed by an upward deflection, which is called an R peak, and then a downward deflection S. The QRS complex indicates ventricular depolarization and contraction. Finally, the T wave, which is normally a smaller upwards waveform, representing ventricular repolarization.
+ECG can be analyzed by studying the components of the waveform. The first initial upward tracing is the P wave, which indicates atrial contraction. The QRS complex, which begins with a small downward deflection, Q, followed by an upward deflection, which is called an R peak, and then a downward deflection, S. The QRS complex indicates ventricular depolarization and contraction. Finally, the T wave, which is normally a smaller upwards waveform, representing ventricular repolarization.
 
 # Heart Rate Info
 - Maximum heart rate = 220 – age
