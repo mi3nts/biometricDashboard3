@@ -1,11 +1,11 @@
 +++
-title = "GSR"
+title = "SPO2"
 weight = 2
 bg = "bg-gradient-white"
 +++
 <!-- : .wrap -->
 
-## **GSR**
+## **SPO2**
 
 ### Quick Summary
 
