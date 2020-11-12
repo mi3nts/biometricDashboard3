@@ -1064,7 +1064,8 @@ h3 [class*='bg-'] {
 /*== 2.2. Typography Classes = .text- == */
 .text-intro,
 [class*='content-'] p {
-  font-size: 2.4rem;
+  font-weight: normal;
+  font-size: 2.8rem;
   line-height: 4rem; }
 
 /* -- Serif -- */
@@ -1452,7 +1453,7 @@ section,
   @media (min-width: 1024px) {
     section,
     .slide {
-      padding-bottom: 12rem;
+      padding-bottom: 5rem;
       padding-top: 5rem; } }
 
 /*slide with no padding (full card, .embed youtube video...) */
@@ -3166,23 +3167,17 @@ Slides - Backgrounds <section class="bg-primary">
   border-radius: 25px;
   padding: 60px; }
 
-.bg-green {
-  background-color: #077; }
-
-.bg-purple {
-  background-color: #62b; }
-
-.bg-red {
-  background-color: #c23; }
-
 .bg-white {
   background-color: #fff; }
 
-.bg-facebook {
-  background-color: #3b5998; }
-
 .bg-custom {
   background-color: #ddc8ba;
+  border-radius: 25px;
+  padding: 60px;
+}
+
+.bg-custom1 {
+  background-color: #ced3b6;
   border-radius: 25px;
   padding: 60px;
 }
