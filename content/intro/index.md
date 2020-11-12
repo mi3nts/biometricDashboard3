@@ -17,23 +17,14 @@ bg = "bg-gradient-gray"
 <!--: .wrap -->
 
 ## **Who are we?**
-{{< div class="bg-white shadow" >}}
-<!--: .flexblock gallery -->
-- {{< gallery title="Madhav Mehta" src="images/headshot.JPG" >}}<h2>Madhav Mehta</h2><p>Graduating in December 20' with BS in CS and working full time</p>{{< /gallery >}}
-- {{< gallery title="Madhav Mehta" src="images/Arjun_headshot.jpg" >}}<h2>Arjun Sridhar</h2><p>insert</p>{{< /gallery >}}
-- {{< gallery title="Madhav Mehta" src="images/pencil.jpg" >}}<h2>Ryan Rahman</h2><p>insert</p>{{< /gallery >}}
-- {{< gallery title="Madhav Mehta" src="images/VinylGroupPortraits_TS2_8850.jpg" >}}<h2>Rohit Shennoy</h2><p>insert</p>{{< /gallery >}}
-- {{< gallery title="Madhav Mehta" src="images/pencil.jpg" >}}<h2>Vihas Gowreddy</h2><p>insert</p>{{< /gallery >}}
-- {{< gallery title="Madhav Mehta" src="images/shawhin.jpeg" >}}<h2>Shawhin Talebi</h2><p>insert</p>{{< /gallery >}}
-- {{< gallery title="Madhav Mehta" src="images/pencil.jpg" >}}<h2>Ash Fernando</h2><p>insert</p>{{< /gallery >}}
-- {{< gallery title="Madhav Mehta" src="images/pencil.jpg" >}}<h2>Professor Larry David</h2><p>insert</p>{{< /gallery >}}
+{{< div class="bg-gray shadow" >}}
+<!--: .flexblock gallery1 -->
+- {{< gallery href="https://www.linkedin.com/in/madhavnmehta/" title="Madhav's LinkedIn" src="images/headshot.JPG" >}}<h2>Madhav Mehta</h2><p>Class of 2020</p>{{< /gallery >}}
+- {{< gallery href="https://www.linkedin.com/in/arjun-sridhar-792826195/" title="Arjun's LinkedIn" src="images/Arjun_headshot.jpg" >}}<h2>Arjun Sridhar</h2><p>Class of 2020</p>{{< /gallery >}}
+- {{< gallery href="https://www.linkedin.com/in/ryan-x-rahman/" title="Ryan's LinkedIn" src="images/pencil.jpg" >}}<h2>Ryan Rahman</h2><p>Class of 2021</p>{{< /gallery >}}
+- {{< gallery href="https://www.linkedin.com/in/rohitshenoy2/" title="Rohit's LinkedIn" src="images/VinylGroupPortraits_TS2_8850.jpg" >}}<h2>Rohit Shenoy</h2><p>Class of 2021?</p>{{< /gallery >}}
+- {{< gallery href="https://www.linkedin.com/in/vihas-gowreddy-550499171/" title="Vihas's LinkedIn" src="images/pencil.jpg" >}}<h2>Vihas Gowreddy</h2><p>Class of 2021</p>{{< /gallery >}}
 {{< /div >}}
-
----
-<!--: .wrap -->
-
-<!--: .flexblock gallery -->
-
 
 ---
 <!--: .wrap -->
