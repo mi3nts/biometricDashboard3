@@ -22,17 +22,17 @@
 
 ## Modules
 
-###EEG Module
+### EEG Module
 
-###ECG Module
+### ECG Module
 
-###HRV Module
+### HRV Module
 
-###RR Module
+### RR Module
 
-###GSR Module
+### GSR Module
 
-###Sp02 Module
+### Sp02 Module
 
 
 # Attribution
