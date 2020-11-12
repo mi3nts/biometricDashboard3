@@ -17,7 +17,7 @@ bg = "bg-gradient-gray"
 <!--: .wrap -->
 
 ## **Who are we?**
-{{< div class="bg-gray shadow" >}}
+{{< div class="bg-custom1 shadow" >}}
 <!--: .flexblock gallery1 -->
 - {{< gallery href="https://www.linkedin.com/in/madhavnmehta/" title="Madhav's LinkedIn" src="images/headshot.JPG" >}}<h2>Madhav Mehta</h2><p>Class of 2020</p>{{< /gallery >}}
 - {{< gallery href="https://www.linkedin.com/in/arjun-sridhar-792826195/" title="Arjun's LinkedIn" src="images/Arjun_headshot.jpg" >}}<h2>Arjun Sridhar</h2><p>Class of 2020</p>{{< /gallery >}}
