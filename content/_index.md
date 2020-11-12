@@ -7,6 +7,7 @@ title = "MINTS Biometric Dashboard"
 
 <!--: .text-intro -->Powering Scientific Research
 
+[{{< svg fa-github >}} GitHub](https://github.com/mi3nts/biometricDashboard3)
 [{{< svg fa-heartbeat >}}UTD Mints](http://utdmints.info/)
 
 <!--: .wrap -->
