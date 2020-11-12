@@ -1453,7 +1453,7 @@ section,
     section,
     .slide {
       padding-bottom: 12rem;
-      padding-top: 12rem; } }
+      padding-top: 5rem; } }
 
 /*slide with no padding (full card, .embed youtube video...) */
 .fullscreen {
@@ -1959,7 +1959,7 @@ Block Thumbnails li+.overlay+image
 img size recommended:800x600px
 =================================================== */
 .flexblock.gallery li {
-  margin-bottom: 4.8rem; }
+  margin-bottom: 0.5rem; }
   .flexblock.gallery li:nth-child(n+4) {
     -webkit-box-flex: inherit;
         -ms-flex: inherit;
@@ -3162,7 +3162,9 @@ Slides - Backgrounds <section class="bg-primary">
   background-color: #f9f8f2; }
 
 .bg-gray {
-  background-color: #d5d9e2; }
+  background-color: #d5d9e2;
+  border-radius: 25px;
+  padding: 60px; }
 
 .bg-green {
   background-color: #077; }
@@ -3178,6 +3180,12 @@ Slides - Backgrounds <section class="bg-primary">
 
 .bg-facebook {
   background-color: #3b5998; }
+
+.bg-custom {
+  background-color: #ddc8ba;
+  border-radius: 25px;
+  padding: 60px;
+}
 
 [class*='bg-'] .bg-white {
   color: #333;
@@ -3451,7 +3459,7 @@ li:hover .overlay {
 Gallery li+.overlay+image
 =========================================== */
 .gallery li {
-  background-color: rgba(0, 20, 80, 0.06);
+  background-color: #fff;
   -webkit-box-shadow: 0 1px 1px rgba(0, 0, 0, 0.2), 0 4px 8px rgba(0, 0, 0, 0.03);
           box-shadow: 0 1px 1px rgba(0, 0, 0, 0.2), 0 4px 8px rgba(0, 0, 0, 0.03); }
 
@@ -3463,13 +3471,13 @@ Gallery li+.overlay+image
           box-shadow: 0 1px 1px rgba(0, 0, 0, 0.2), 0 4px 8px rgba(0, 0, 0, 0.08); }
 
 .gallery li footer {
-  border-top: 1px solid rgba(0, 20, 80, 0.1); }
+  border-top: 1px solid rgba(0, 20, 80, 0.1) }
 
 .gallery li a {
   color: #333;
   text-shadow: none; }
 
-.flesblock.gallery li a footer {
+.flexblock.gallery li a footer {
   color: #aaa; }
 
 /*Arrow */
@@ -3790,3 +3798,108 @@ Slides Index
 
 .text-slide-number {
   color: #abc; }
+
+/*
+Custom Gallery
+ */
+.flexblock.gallery1 li {
+  margin-bottom: 0.5rem; }
+  .flexblock.gallery1 li:nth-child(n+4) {
+    -webkit-box-flex: inherit;
+        -ms-flex: inherit;
+            flex: inherit; }
+  .flexblock.gallery1 li figcaption {
+    text-align: center;
+    padding: 1.6rem;
+    position: relative; }
+    .flexblock.gallery1 li figcaption:before {
+      content: '';
+      height: 0;
+      left: 20%;
+      margin-left: -.5em;
+      position: absolute;
+      top: .4rem;
+      -webkit-transform: rotate(135deg);
+              transform: rotate(135deg);
+      -webkit-transform-origin: 0 0;
+              transform-origin: 0 0;
+      -webkit-transition: .1s;
+      transition: .1s;
+      width: 0; }
+  .flexblock.gallery1 li:hover figcaption:before {
+    top: .3rem; }
+
+.aligncenter .flexblock.gallery1 li figcaption:before {
+  left: 55%;
+  margin-left: 0; }
+
+.flexblock.gallery1 li,
+.flexblock.gallery1.blink li > a {
+  padding: 0; }
+
+.flexblock.gallery1 h2 {
+  text-transform: uppercase; }
+
+.flexblock.gallery1 h2 + p,
+.flexblock.gallery1 h3 + p {
+  margin-top: .8rem; }
+
+.flexblock.gallery1 p {
+  font-size: 1.6rem;
+  line-height: 2.4rem;
+  margin-bottom: 0; }
+
+.flexblock.gallery1 li footer {
+  margin-top: .8rem;
+  padding: 1.2rem 0 0;
+  position: relative; }
+
+.flexblock.gallery1 li img {
+  display: block;
+  margin-left: auto;
+  margin-right: auto; }
+
+@media (min-width: 600px) {
+  .flexblock.gallery1 {
+    margin-left: -2%;
+    margin-right: -2%; }
+    .flexblock.gallery1 li {
+      margin-left: 2%;
+      margin-right: 2%;
+      width: 46%; } }
+
+@media (min-width: 1024px) {
+  .flexblock.gallery1 li {
+    width: 16%; }
+  .grid.sm .flexblock.gallery1 li,
+  .grid.ms .flexblock.gallery1 li {
+    width: 29%; }
+  .grid.sms .flexblock.gallery1 li {
+    width: 46%; } }
+
+.gallery1 li {
+  background-color: #fff;
+  -webkit-box-shadow: 0 1px 1px rgba(0, 0, 0, 0.2), 0 4px 8px rgba(0, 0, 0, 0.03);
+          box-shadow: 0 1px 1px rgba(0, 0, 0, 0.2), 0 4px 8px rgba(0, 0, 0, 0.03); }
+
+.gallery1 li figcaption {
+  background-color: #fff; }
+
+.flexblock.gallery1 li:hover {
+  -webkit-box-shadow: 0 1px 1px rgba(0, 0, 0, 0.2), 0 4px 8px rgba(0, 0, 0, 0.08);
+          box-shadow: 0 1px 1px rgba(0, 0, 0, 0.2), 0 4px 8px rgba(0, 0, 0, 0.08); }
+
+.gallery1 li footer {
+  border-top: 1px solid rgba(0, 20, 80, 0.1) }
+
+.gallery1 li a {
+  color: #333;
+  text-shadow: none; }
+
+.flexblock.gallery1 li a footer {
+  color: #aaa; }
+
+/*Arrow */
+.gallery1 li figcaption:before {
+  border: 0.8rem solid #000;
+  border-color: transparent transparent #fff #fff; }
