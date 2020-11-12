@@ -12,11 +12,9 @@ Electroencephologram (EEG) evaluates brain activity. Electrodes are placed on th
 
 {{< div class="bg-custom shadow" >}}
 <!--: .flexblock gallery -->
-- {{< gallery title="Delta Band" src="images/delta_band.gif" >}}<h2>Delta Band</h2><p>(2-4Hz)</p>{{< /gallery >}}
-- {{< gallery title="Theta Band" src="images/theta_band.gif" >}}<h2>Theta Band</h2><p>(4-8Hz)</p>{{< /gallery >}}
-- {{< gallery title="Alpha Band" src="images/alpha_band.gif" >}}<h2>Alpha Band</h2><p>(8-12Hz)</p>{{< /gallery >}}
-- {{< gallery title="Total Band" src="images/total_band.gif" >}}<h2>Total Band</h2><p>(Sum)</p>{{< /gallery >}}
+- {{< gallery title="Delta Band" src="images/eeg/delta_band.gif" >}}<h2>Delta Band</h2><p>(2-4Hz)</p>{{< /gallery >}}
+- {{< gallery title="Theta Band" src="images/eeg/theta_band.gif" >}}<h2>Theta Band</h2><p>(4-8Hz)</p>{{< /gallery >}}
+- {{< gallery title="Alpha Band" src="images/eeg/alpha_band.gif" >}}<h2>Alpha Band</h2><p>(8-12Hz)</p>{{< /gallery >}}
+- {{< gallery title="Total Band" src="images/eeg/total_band.gif" >}}<h2>Total Band</h2><p>(Sum)</p>{{< /gallery >}}
 {{< /div >}}
-
-<!-- : .div -->
 
