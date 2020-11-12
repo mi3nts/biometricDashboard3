@@ -17,17 +17,20 @@ bg = "bg-gradient-gray"
 <!--: .wrap -->
 
 ## **Who are we?**
-{{< div class="bg-white shadow" >}}
 <!--: .flexblock gallery -->
-- {{< gallery title="Madhav Mehta" src="images/pencil.jpg" >}}<h2>Madhav Mehta</h2><p>Graduating in December 20' with BS in CS and working full time</p>{{< /gallery >}}
-- {{< gallery title="Madhav Mehta" src="images/pencil.jpg" >}}<h2>Arjun Sridhar</h2><p>insert</p>{{< /gallery >}}
+- {{< gallery title="Madhav Mehta" src="images/headshot.JPG" >}}<h2>Madhav Mehta</h2><p>Graduating in December 20' with BS in CS and working full time</p>{{< /gallery >}}
+- {{< gallery title="Madhav Mehta" src="images/Arjun_headshot.jpg" >}}<h2>Arjun Sridhar</h2><p>insert</p>{{< /gallery >}}
 - {{< gallery title="Madhav Mehta" src="images/pencil.jpg" >}}<h2>Ryan Rahman</h2><p>insert</p>{{< /gallery >}}
-- {{< gallery title="Madhav Mehta" src="images/pencil.jpg" >}}<h2>Rohit Shennoy</h2><p>insert</p>{{< /gallery >}}
+- {{< gallery title="Madhav Mehta" src="images/VinylGroupPortraits_TS2_8850.jpg" >}}<h2>Rohit Shennoy</h2><p>insert</p>{{< /gallery >}}
+
+---
+<!--: .wrap -->
+
+<!--: .flexblock gallery -->
 - {{< gallery title="Madhav Mehta" src="images/pencil.jpg" >}}<h2>Vihas Gowreddy</h2><p>insert</p>{{< /gallery >}}
 - {{< gallery title="Madhav Mehta" src="images/pencil.jpg" >}}<h2>Shawhin Talebi</h2><p>insert</p>{{< /gallery >}}
 - {{< gallery title="Madhav Mehta" src="images/pencil.jpg" >}}<h2>Ash Fernando</h2><p>insert</p>{{< /gallery >}}
 - {{< gallery title="Madhav Mehta" src="images/pencil.jpg" >}}<h2>Professor Larry David</h2><p>insert</p>{{< /gallery >}}
-{{< /div >}}
 
 ---
 <!--: .wrap -->
