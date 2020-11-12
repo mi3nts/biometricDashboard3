@@ -1,6 +1,6 @@
 +++
 title = "Heart Rate Variability"
-weight = 5
+weight = 4
 bg = "bg-gradient-white"
 +++
 <!-- : .wrap -->

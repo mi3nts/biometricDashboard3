@@ -1,6 +1,6 @@
 +++
 title = "SPO2"
-weight = 2
+weight = 7
 bg = "bg-gradient-white"
 +++
 <!-- : .wrap -->

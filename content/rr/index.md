@@ -1,6 +1,6 @@
 +++
 title = "Respiration Rate"
-weight = 4
+weight = 5
 bg = "bg-gradient-white"
 +++
 <!-- : .wrap -->

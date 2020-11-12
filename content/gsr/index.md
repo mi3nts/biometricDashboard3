@@ -1,6 +1,6 @@
 +++
 title = "GSR"
-weight = 2
+weight = 6
 bg = "bg-gradient-white"
 +++
 <!-- : .wrap -->

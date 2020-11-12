@@ -1,14 +1,18 @@
 +++
 title = "EEG"
-weight = 4
+weight = 2
 bg = "bg-gradient-white"
 +++
 <!-- : .wrap -->
 
-## **EEG**
+## **EEG Module**
+### What does the EEG Module show? 
+Electroencephologram (EEG) evaluates brain activity. Electrodes are placed on the scalp and measure the electrical impulses that occur in the brain and record the results. The results are in the form of wave patterns that can be evaluated at different frequency bands. The goal for the EEG visualization is to plot the heatmaps for the delta band, theta band, alpha band, and total band, and show the electrical activity that is being picked up by the different sensors.
 
-Electroencephologram (EEG) evaluates brain activity. Electrodes are placed on the scalp and measure the electrical impulses that occur in the brain and record the results. The results are in the form of wave patterns that can be evaluated at different frequency bands. The frequency bands we focused on for this project are the delta band (around 1-4 Hz), the theta band (around 4-8 Hz), the alpha band (around 8-12 Hz), and the total band (which is the sum of the delta, theta, and alpha bands). The delta band is usually associated with low brain activity and usually the frequency band where deep sleep and depth of sleep are studied. The theta band is usually assoicated with slow activity such as intuition or daydreaming, but the activity is faster than the delta band. The alpha band is usually associated with high activity such as deep thought, concentration, or confusion. Certain brain disorders such as seizures, brain tumors, and head injuries can be detected from studying the results of an EEG.
-
-For our project, there are 64 electrode sensors placed on the subject and the data is gathered from the electrical impulses that the electrodes measure. The goal for the EEG visualization is to plot the heatmaps for the delta band, theta band, alpha band, and total band, and show the electrical activity that is being picked up by the different sensors. To do this, data is continuously read in from a streaming layer and part of this data contains the voltages measured by the 64 different EEG sensors. The voltages for the 64 different sensors are then retrieved, and the voltages collected over time from the streaming layer are converted to frequencies using welch's method, which converts the voltages in the time domain to their corresponding power at the corresponding frequency. After this, the power spectrum for the delta band, theta band, alpha band, and total band are retreived from the output of the welch function, and are then plotted on the heatmaps at their respective frequency bands. The heatmaps are then updated each time new data is gathered from the streaming layer. From the heatmaps, the frequency of brain activity can be seen for the different frequency bands, along with the location of activity in the brain as the 64 different sensors are plotted. The heatmaps can then be studied to get information on brain activity at that frequency band and to diagnose any brain disorders.
-
-The code for the EEG visualization is found under the modules directory and is in the file eegModule.py. The MNE library is used to plot the heatmaps, and several strucutures such as ColumnDataSource and Figure are used from Bokeh to plot the heatmaps and update them continuously.
+{{< div class="bg-white shadow" >}}
+<!--: .flexblock gallery -->
+- {{< gallery title="Delta Band" src="https://webslides.tv/static/images/demos-why.png" >}}<h2>Delta Band</h2><p>(2-4Hz)</p>{{< /gallery >}}
+- {{< gallery title="Theta Band" src="https://webslides.tv/static/images/demos-why.png" >}}<h2>Theta Band</h2><p>(4-8Hz)</p>{{< /gallery >}}
+- {{< gallery title="Alpha Band" src="https://webslides.tv/static/images/demos-why.png" >}}<h2>Alpha Band</h2><p>(8-12Hz)</p>{{< /gallery >}}
+- {{< gallery title="Delta Band" src="https://webslides.tv/static/images/demos-why.png" >}}<h2>Total Band</h2><p>(Sum)</p>{{< /gallery >}}
+{{< /div >}}
