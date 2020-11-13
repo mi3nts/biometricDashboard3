@@ -17,6 +17,7 @@
     
 ## Introduction
 
+Our project is the Multi-Scale Integrated Interactive Intelligent Sensing and Simulation (MINTS) Biometrics Application which visualizes different biometrics that are collected from sensors placed on participants. The biometrics we are looking at are Electroencephalogram (EEG) which looks at brain activity, Heart Activity which uses an Electrocardiogram (ECG), Heart Rate Variability (HRV), Galvanic Skin Response (GSR) which measure skin conductance, Respiration Rate, and Blood Oxygen (SPO2). The data for these biometrics is collected from sensors placed on participants, and this data is then processed in real time for the visualizations. There have been a couple of past iterations that have dealt with the computations for the EEG, and creating a dashboard that contains the visualizations for all of the biometrics. Our project is different in that it will be web-based, as this provides more flexibility and allows for easier augmentation in the future. We can use the existing code that is available for some of the visualizations and add on to it so that it fits our web-based application.
 
 ## Installation
 
