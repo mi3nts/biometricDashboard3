@@ -1,16 +1,5 @@
-from bokeh.plotting import figure, output_file, show
-import pandas as pd
-import numpy as np
-import scipy.signal
-from collections import deque
-import scipy.fftpack
-import statistics
 from pylsl import StreamInlet, resolve_stream
 from QRSDetector import QRSDetectorOnline
-import time
-import heartpy as hp
-import itertools
-import datetime
 
 
 def rr_changes(rr_list, rr_list_size, queue_limit, peaks_time, counter, num_rr_skipped, queue_end, listChanged):
