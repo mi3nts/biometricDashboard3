@@ -9,79 +9,83 @@ from pylsl import StreamInlet, resolve_stream
 from QRSDetector import QRSDetectorOnline
 import time
 import heartpy as hp
+import itertools
+import datetime
 
 
+def rr_changes(rr_list, rr_list_size, queue_limit, peaks_time, counter, num_rr_skipped, queue_end, listChanged):
+    if (rr_list_size < queue_limit) and (len(rr_list) > rr_list_size):
+        #print("List Changed")
+        rr_list_size = rr_list_size + 1
+        peaks_time.append(counter)
+        listChanged = True
+        if rr_list_size == queue_limit:
+            queue_end = rr_list[-1]
+    elif len(rr_list) == queue_limit and rr_list[-1] != queue_end: #Account for deque size being reached
+        listChanged = True
+        peaks_time.append(counter)
+        num_rr_skipped = num_rr_skipped - 1
+    
+    return rr_list_size, listChanged, queue_end, num_rr_skipped
+
+
+def find_resp(rr_list, counter, sampling_frequency, listChanged, peaks_time, num_rr_skipped):
+    if len(rr_list) < 4:
+        if counter == 1:
+            return 0, num_rr_skipped
+    elif len(rr_list) >= 4 and counter < (sampling_frequency * 8):
+        temp = list(rr_list)
+        if listChanged:
+            m, wd = resp_processing.calc_breathing(temp, sampling_freq=sampling_frequency)
+            val = m['breathingrate']
+            return val, num_rr_skipped
+
+    elif counter >= (sampling_frequency * 8):
+        if (peaks_time[-1] - peaks_time[0]) > (sampling_frequency * 8):
+            num_rr_skipped = num_rr_skipped + 1
+            peaks_time.pop(0)
+            listChanged = True
+
+        temp = list(rr_list)
+        temp = temp[num_rr_skipped:]
+
+        if listChanged:
+            m, wd = resp_processing.calc_breathing(temp, sampling_freq=sampling_frequency)
+            val = m['breathingrate']
+            return val, num_rr_skipped
+    return -1, num_rr_skipped
 
 print("looking for stream...")
 streams = resolve_stream()
 inlet = StreamInlet(streams[0])
 print("Stream found")
-amtData = 0
 resp_processing = QRSDetectorOnline()
-x = []
-total_peaks = []
-val = 0
-#data, _ = hp.load_exampledata(0)
-#wd, m = hp.process(data, 100.0)
+
+rr_list_size = 0
+counter = 0
+peaks_time = list()
+num_rr_skipped = 0
+sampling_frequency = 500 #CHANGE WHEN NECESSARY
+queue_limit = sampling_frequency * .8
+queue_end = 0.0
+
 while True:
     sample, timestamp = inlet.pull_sample()
-#data = pd.read_csv(r'/Users/vihasgowreddy/Desktop/Biometrics_Respiration/sampleRespData/sampleRespData_walking.txt')
-    ecg_signal = sample[68]
-    rr_list = resp_processing.process_measurement(ecg_signal)
-    amtData = amtData + 1
-    if len(rr_list) > 5:
-        m, wd = resp_processing.calc_breathing(rr_list)
-        #val = m['breathingrate']
-        if m['breathingrate'] != val:
-            val = m['breathingrate']
-            print(val)
-        #print(rr_list)
-    time.sleep(.1)
-    if (amtData == 30000):
-        break
-        #print(resp_processing.calculate_hrv(rr_list))
-    #amtData += 50
-#columnsToPlot = pd.DataFrame(data, columns = ['Resp']).values.flatten()
-#columnsToPlot = pd.DataFrame(data).values.flatten()
     
-#FIND NORMALIZE FUNCTION
-#avg = sum(columnsToPlot) / len(columnsToPlot)
-#stdDev = statistics.stdev(columnsToPlot)
+    ecg_signal = sample[68]
+    #row_signal = sample[82]
 
-#columnsToPlot[:] = [(x - avg)/stdDev for x in columnsToPlot] #NORMALIZE
+    listChanged = False
 
-    #
-#olumnsToPlotNew = scipy.fftpack.fft(columnsToPlot)
+    #if counter == 0:
+    #     print(f"Row Signal: {row_signal}")
+         
+    rr_list = resp_processing.process_measurement(ecg_signal)
+    rr_list_size, listChanged, queue_end, num_rr_skipped = rr_changes(rr_list, rr_list_size, queue_limit, peaks_time, counter, num_rr_skipped, queue_end, listChanged)
+    
+    counter = counter + 1
 
-#peaks, _ = scipy.signal.find_peaks(columnsToPlot, distance=250, prominence=1)
-#peaksFound = 0
-#print(pd.DataFrame(data, columns= ['Resp']).index.astype(np.int))
-#output_file("line.html")
-#p = figure(plot_width = 2000, plot_height=400)
-#p.line(pd.DataFrame(data, columns= ['Resp']).index.astype(np.int), columnsToPlot, line_width=2)
-#p.line(pd.DataFrame(data).index.astype(np.int), columnsToPlot, line_width=2)
-#p.line(f, pxx, line_width=2)
-#p.line(columnsToPlot.index.astype(np.int), columnsToPlot, line_width=2)
-#for x in peaks:
-#    if x <= 150000:
-#        peaksFound += 1
-#    p.circle(x, columnsToPlot[x], size=5, color="red", alpha = 0.5)
-#p.circle(2700, columnsToPlot[2700], size=5, color="red", alpha = 0.5) #GET RID OF
-#.circle(12200, columnsToPlot[12200], size=5, color="red", alpha = 0.5)#GET RID OF
-#p.circle(16150, columnsToPlot[16150], size=5, color="red", alpha = 0.5)#GET RID OF
-#show(p)
-#print(rr_list.len())
-#print(peaks)
-#print(f'Respiration Rate: {peaksFound/5}')
-
-
-
-#TOTAL BREATHING RATE
-# columnsToPlot = pd.DataFrame(data[:30000]).values.flatten()
-# print(columnsToPlot)
-# rr_list = []
-# for val in columnsToPlot:
-#     rr_list.append(resp_processing.process_measurement(val))
-# print(rr_list)
-# m, wd = resp_processing.calc_breathing(rr_list)
-# print(m['breathingrate'])
+    val, num_rr_skipped = find_resp(rr_list, counter, sampling_frequency, listChanged, peaks_time, num_rr_skipped)
+    if val == -1:
+        continue
+    print(val)
