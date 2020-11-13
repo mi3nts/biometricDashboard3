@@ -1,5 +1,4 @@
 import numpy as np
-import heartpy as hp
 from scipy.interpolate import UnivariateSpline
 from collections import deque
 from scipy.signal import butter, lfilter, welch
@@ -295,8 +294,9 @@ class QRSDetectorOnline(object):
         adj_sampling_frequency = sampling_freq * 10
         
         if filter_breathing:
-            breathing = hp.filtering.filter_signal(breathing, cutoff=bw_cutoff,
-                                                sample_rate = float(adj_sampling_frequency), filtertype='bandpass')
+            breathing = self.bandpass_filter(breathing, lowcut=bw_cutoff[0],
+                                                         highcut=bw_cutoff[1], signal_freq=float(adj_sampling_frequency),
+                                                         filter_order=self.filter_order)
 
         if method.lower() == 'fft':
             datalen = len(breathing)
