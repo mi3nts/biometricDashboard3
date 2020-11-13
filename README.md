@@ -116,9 +116,31 @@ Through pulse oximeters, which function by using light sensors to record how muc
 
 ## Authors
 
+#### Students
+- **Vihasreddy Gowreddy**: RR module
+- **Madhav Mehta**: HRV module
+- **Ryan Rahman**: ECG module
+- **Arjun Sridhar**: EEG module
+- **Rohit Shenoy**: SPO2 and GSR modules
+
+#### Project Leads
+- **Bharana Fernando**
+- **Shawhin Talebi**
 
 ## License
-=======
+If you find value in this dashboard please use the following citation: 
+
+`Gowreddy, V., Mehta, M., Rahman, R., Sridhar, A., Shenoy R. K., Fernando, B., Talebi, S. biometricDashboard3. 2020. https://github.com/mi3nts/biometricDashboard3`
+
+__Bibtex__:
+```
+@misc{BM3,
+authors={Vihasreddy Gowreddy, Madhav Mehta, Ryan Rahman, Arjun Sridhar, Rohit Shenoy, Bharana Fernando, & Shawhin Talebi},
+title={biometricDashboard3},
+howpublished={https://github.com/mi3nts/biometricDashboard3}
+year={2020}
+}
+```
 
 
 
