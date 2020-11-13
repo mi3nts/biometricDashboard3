@@ -14,9 +14,9 @@ ECG can be analyzed by studying the components of the waveform. The first initia
 - Walking: 110-120 bpm
 - Exercise is the best way to both lower your resting heart rate and increase your maximum heart rate and aerobic capacity
 - Heart Rate Conditions: 
-  -Normal: 60-100 bpm
-  -Tachycardia: > 100 bpm
-  -Bradycardia: < 60 bpm
+  * Normal: 60-100 bpm
+  * Tachycardia: > 100 bpm
+  * Bradycardia: < 60 bpm
   
 # How does the ECG Module work?
 It's initially called upon in the main.py with the parameter source which is a columnDataSource that continuously updates the x & y values of the ecg plot. In addition, there's another columnDataSource source_num that continuously updates the x,y, and actual value of heart rate so it's kept in the right corner of the plot.  The main plot is outlined with the Bokeh object Figure, which has attributes like title and axis labeling to make a complete visualization. The ECG line is placed on the graph by using the bokeh class Plot, which takes in parameters ‘ecg_x’, ‘ecg_y’, and source. The heart rate is added in a similar fashion by using the bokeh class glyph, which takes in the parameters ‘hr_x’, ‘hr_y’ and ‘hr’ and source_num. 
