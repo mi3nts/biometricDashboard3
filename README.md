@@ -64,6 +64,24 @@ It's initially called upon in the main.py with the parameter source which is a c
 
 ### RR Module
 
+#### What is Respiration Rate and why is it important?
+
+Respiration rate is a vital sign measuring the number of breaths an individual takes per minute. A regular respiration rate is between 12 and 20 breaths per minute at rest, but this can vary depending on an individual’s health, heart rate, and underlying conditions such as asthma and lung diseases. This information can be used to compare to an individual’s regular respiration rate and help detect abnormalities caused by illness as well as confirm overall health. The respiration rate can be calculated in many ways but two that minimize noise the most extract the respiratory signal from ECG or PPG data.
+
+#### How does the Respiration Rate Module work?
+
+This study places electrodes around the body of an individual in question to gather voltage data in response to body functions. Because the data is not fed directly to the code, pylsl, a lab streaming layer, is used to stream the data to the code at a sampling frequency of about 50Hz essentially allowing the code to work with real time data as future data will also have a frequency close to this. The code works by getting ECG data from pylsl and taking 8 second blocks of data used for approximating the respiration rate for an entire minute. This means that the first 8 seconds of data prints a value of 0 respiration rate until there is enough data to work (4 heartbeats detected) and until 8 seconds is reached, the respiration rate printed is slightly inaccurate because of a lack of data. After the 8 second threshold has been reached, the sliding window technique is used to only keep the heartbeats within an 8 second interval and only those values are used to calculate the respiration rate. In depth information about how the algorithm works is described below.
+
+#### How does calculating Respiration Rate for a block of data work?
+
+Respiration rate is calculated using ECG data and extracting the respiratory signal from the RR interval calculated. The RR interval is calculated in the same way it is for heart rate variability. ECG data is first filtered through a bandpass filter with a lowcut of .1 and a high cut of 15. The derivate is then found to identify slopes and that information is further enhanced by squaring each data point. At this point, QRS complexes (R peaks) are detected using the Janko Slavic peak detection algorithm and these peaks are identified as actual peaks or noise by comparing to a threshold value before being added to the RR list. The RR list is then passed to a calc_breathing function if the number of values in the RR list is greater than 3 (necessary for the algorithm) where a cubic spline is then used on the R interval list to smooth out any noise and to account for this transformation, the sampling frequency is multiplied by 10. Finally, passing the adjusted frequency to either a Fourier transformation or Welch’s method can find the final value. The default, Welch’s algorithm, is used to extract the power spectral density and the max value in it corresponds to the number of seconds per breathing cycle (breathing rate in Hz) which is then converted to breaths per minute by multiplying by 60.
+
+#### Sources and Extra Info
+
+This code uses a variation of the calc_breathing function located in the heartpy package found https://github.com/paulvangentcom/heartrate_analysis_python/tree/master/heartpy  in the heartpy.py file. Because the sampling frequency can vary, the frequency is changed from being hardcoded to using an inputted one that is multiplied by 10 after the cubic spline is used.
+
+Average Respiration Rate Range: 6-24 bpm (breaths per minute)
+
 ### GSR Module
 
 #### Quick Summary
