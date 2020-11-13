@@ -6,13 +6,14 @@ The Electrocardiography (ECG) module shows electrical signals in the heart over 
 ECG can be analyzed by studying the components of the waveform. The first initial upward tracing is the P wave, which indicates atrial contraction. The QRS complex, which begins with a small downward deflection, Q, followed by an upward deflection, which is called an R peak, and then a downward deflection, S. The QRS complex indicates ventricular depolarization and contraction. Finally, the T wave, which is normally a smaller upwards waveform, representing ventricular repolarization.
 
 # Heart Rate Info
-- Maximum heart rate = 220 – age
-- Moderate exercise intensity: 50% to about 70% of your maximum heart rate
-- Vigorous exercise intensity: 70% to about 85% of your maximum heart rate
-- Sleep: 40-50 bpm
-- Rest: 60-100 bpm
-- Walking: 110-120 bpm
 - Exercise is the best way to both lower your resting heart rate and increase your maximum heart rate and aerobic capacity
+- Maximum heart rate = 220 – age
+- Heart Rates During Activites: 
+  * Moderate exercise intensity: 50% to about 70% of your maximum heart rate
+  * Vigorous exercise intensity: 70% to about 85% of your maximum heart rate
+  * Sleep: 40-50 bpm
+  * Rest: 60-100 bpm
+  * Walking: 110-120 bpm
 - Heart Rate Conditions: 
   * Normal: 60-100 bpm
   * Tachycardia: > 100 bpm
