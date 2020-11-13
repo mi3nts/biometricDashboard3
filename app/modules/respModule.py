@@ -1,4 +1,4 @@
-# GSR MODULE
+# RESPIRATION MODULE
 
 # CODE AUTHORED BY: SHAWHIN TALEBI
 # THE UNIVERSITY OF TEXAS AT DALLAS
@@ -7,9 +7,8 @@
 # import bokeh module
 from bokeh.plotting import figure
 from bokeh.models.annotations import Title
-from bokeh.models import HoverTool
 
-class gsrModule:
+class respModule:
 
     def __init__(self, source_num):
 
@@ -34,20 +33,15 @@ class gsrModule:
         self.Fig.outline_line_alpha = 1
         self.Fig.outline_line_color = "black"
 
-        self.Fig.add_tools(HoverTool(
-        tooltips=[
-            ("GSR","refers to changes in sweat gland activity")
-        ]
-        ))
-
         # DEFINE PLOT
         # ------------------------------------------------------------------------------
-        self.Text = self.Fig.text(x="num_x", y="num_y", text="gsr", source=source_num, \
-        text_font_size="30px", text_align="center", text_baseline="middle", text_color="#96deb3")
+        self.Text = self.Fig.text(x="num_x", y="num_y", text="rr", source=source_num, \
+        text_font_size="30px", text_align="center", text_baseline="middle", text_color="#20880E")
+
 
         # create title
         t = Title()
-        t.text = 'GSR (uV)'
+        t.text = 'RR (bpm)'
 
         # set title
         self.Fig.title = t

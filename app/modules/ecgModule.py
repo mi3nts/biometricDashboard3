@@ -1,47 +1,52 @@
 # ECG MODULE
 
-# CODE AUTHORED BY: SHAWHIN TALEBI
+# CODE AUTHORED BY: SHAWHIN TALEBI AND RYAN RAHMAN
 # THE UNIVERSITY OF TEXAS AT DALLAS
 # MULTI-SCALE INTEGRATED REMOTE SENSING AND SIMULATION (MINTS)
 
 # import bokeh module
-from bokeh.plotting import figure,show
-from bokeh.models import Title, Text
-import random as random
-from bokeh.models import ColumnDataSource, Range1d, LabelSet, Label
+from bokeh.plotting import figure
+from bokeh.models import HoverTool
+
 
 class ecgModule:
 
-    def __init__(self, source):
+    def __init__(self, source, source_num):
 
         # DEFINE FIGURE
         # ----------------------------------------------------------------------
-        
-        #creates frame for visualization 
-        self.Fig = figure(plot_width=900, plot_height=600, y_range = [2000, 4000], tools="hover")
+
+        self.Fig = figure(plot_width=1050, plot_height=600, y_range = [2000, 4000])
         self.Fig.xaxis.axis_label = 'Time Index'
         self.Fig.yaxis.axis_label = 'ECG (uV)'
+
         # configure visual properties on a plot's title attribute
         self.Fig.title.text = "Realtime ECG"
         self.Fig.title.align = "center"
-        self.Fig.title.text_font_size = "40px"
-        heartRates = "Heart Rates: Normal: 60-100 bpm, Tachycardia: >100 bpm, Bradycardia: <60 bpm"
-        self.Fig.add_layout(Title(text=heartRates, align="center"), "below")
-        N = 9
-        text = [str(random.randint(0, N))]
-        #source2 = ColumnDataSource(dict(x=x, y=y, text=text))
-        #glyph = Text(x="x", y="y", text="text", text_font_size="100px", text_align="center", text_baseline="middle", angle=0, text_color="#96deb3")
-        #self.Plot = self.Fig.text(x=300, y=300, text="text", text_font_size="100px", text_align="center", text_baseline="middle", angle=0, text_color="#96deb3")
-        #print("plotted")
-        #self.Plot = self.Fig.add_glyph(Text(x=200, y=200, text=text, text_font_size="20px", text_align="right", text_baseline="middle", angle=0, text_color="#96deb3"))
+        self.Fig.title.text_font_size = "30px"
+
+        # remove toolbar and Bokeh logo
+        self.Fig.toolbar.logo = None
+        self.Fig.toolbar_location = None
+
+        # add tooltip
+        self.Fig.add_tools(HoverTool(
+            tooltips=[
+                ("Normal Heart Rate", "60-100 bpm"),
+                ("Tachycardia", ">100 bpm"),
+                ("Bradycardia", "<60 bpm")
+            ],
+            mode='vline'
+        ))
+
         # DEFINE PLOT
         # ----------------------------------------------------------------------
         
         #plot is created using source data thats passedS when class is called
         self.Plot = self.Fig.line(x='ecg_x', y='ecg_y', source=source, \
                               color='#FB9A99', line_width = 2)
-        print("line")
-        self.Plot = self.Fig.text(x=300, y=300, text="text", text_font_size="200px", text_align="center", text_baseline="middle", angle=0, text_color="blue")
-        print("plotted")
-        
-        
+
+
+        self.Text = self.Fig.text(x="hr_x", y="hr_y", text="hr", source=source_num, \
+        text_font_size="30px", text_align="center", text_baseline="middle", text_color="#FF0000")
+
