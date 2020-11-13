@@ -7,7 +7,7 @@ ECG can be analyzed by studying the components of the waveform. The first initia
 
 # Heart Rate Info
 - Exercise is the best way to both lower your resting heart rate and increase your maximum heart rate and aerobic capacity
-- Maximum heart rate = 220 – age
+- Maximum Heart Rate = 220 – age
 - Heart Rates During Activites: 
   * Moderate exercise intensity: 50% to about 70% of your maximum heart rate
   * Vigorous exercise intensity: 70% to about 85% of your maximum heart rate
