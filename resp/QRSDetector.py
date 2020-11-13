@@ -45,21 +45,21 @@ class QRSDetectorOnline(object):
         QRSDetector class initialisation method.
         """
         # Configuration parameters.
-        self.signal_frequency = 50  # Set ECG device frequency in samples per second here.
+        self.signal_frequency = 500  # Set ECG device frequency in samples per second here.
 
-        self.number_of_samples_stored = 40  # Change proportionally when adjusting frequency (in samples).
+        self.number_of_samples_stored = 400  # Change proportionally when adjusting frequency (in samples).
 
         self.filter_lowcut = 0.1
         self.filter_highcut = 15.0
         self.filter_order = 1
 
-        self.integration_window = 3  # Change proportionally when adjusting frequency (in samples).
+        self.integration_window = 30  # Change proportionally when adjusting frequency (in samples).
 
         self.findpeaks_limit = 0.35
-        self.findpeaks_spacing = 10  # Change proportionally when adjusting frequency (in samples).
-        self.detection_window = 8  # Change proportionally when adjusting frequency (in samples).
+        self.findpeaks_spacing = 100  # Change proportionally when adjusting frequency (in samples).
+        self.detection_window = 80  # Change proportionally when adjusting frequency (in samples).
 
-        self.refractory_period = 20  # Change proportionally when adjusting frequency (in samples).
+        self.refractory_period = 200  # Change proportionally when adjusting frequency (in samples).
         self.qrs_peak_filtering_factor = 0.125
         self.noise_peak_filtering_factor = 0.125
         self.qrs_noise_diff_weight = 0.25
@@ -225,7 +225,7 @@ class QRSDetectorOnline(object):
             ind = ind[data[ind] > limit]
         return ind
 
-    def calc_breathing(self, rrlist, method='welch', filter_breathing=True,
+    def calc_breathing(self, rrlist, sampling_freq, method='welch', filter_breathing=True,
                    bw_cutoff=[0.1, 0.4], measures={}, working_data={}):
         '''estimates breathing rate
 
@@ -237,6 +237,9 @@ class QRSDetectorOnline(object):
         ----------
         rr_list : 1d list or array
             list or array containing peak-peak intervals
+        
+        sampling_freq: integer
+            value associated with the sampling frequency of the data
 
         method : str
             method to use to get the spectrogram, must be 'fft' or 'welch'
@@ -288,31 +291,31 @@ class QRSDetectorOnline(object):
         x_new = np.linspace(0, len(rrlist), np.sum(rrlist, dtype=np.int32))
         interp = UnivariateSpline(x, rrlist, k=3)
         breathing = interp(x_new)
-
-        breathing = self.bandpass_filter(breathing, lowcut=bw_cutoff[0],
-                                                         highcut=bw_cutoff[1], signal_freq=1000,
-                                                         filter_order=2)
-        #hp.filtering.filter_signal(breathing, cutoff=bw_cutoff, 
-        #                            sample_rate = 1000.0, filtertype='bandpass')
+        #Using sampling frequency of 10*original sampling frequency to account for k=3 spline
+        adj_sampling_frequency = sampling_freq * 10
+        
+        if filter_breathing:
+            breathing = hp.filtering.filter_signal(breathing, cutoff=bw_cutoff,
+                                                sample_rate = float(adj_sampling_frequency), filtertype='bandpass')
 
         if method.lower() == 'fft':
             datalen = len(breathing)
-            frq = np.fft.fftfreq(datalen, d=((1/1000.0)))
+            frq = np.fft.fftfreq(datalen, d=((1/float(adj_sampling_frequency))))
             frq = frq[range(int(datalen/2))]
             Y = np.fft.fft(breathing)/datalen
             Y = Y[range(int(datalen/2))]
             psd = np.power(np.abs(Y), 2)
         elif method.lower() == 'welch':
             if len(breathing) < 30000:
-                frq, psd = welch(breathing, fs=1000, nperseg=len(breathing))
+                frq, psd = welch(breathing, fs=adj_sampling_frequency, nperseg=len(breathing))
             else:
-                frq, psd = welch(breathing, fs=1000, nperseg=np.clip(len(breathing) // 10, 
+                frq, psd = welch(breathing, fs=adj_sampling_frequency, nperseg=np.clip(len(breathing) // 10,
                                                                     a_min=30000, a_max=None))
         else:
             raise ValueError('Breathing rate extraction method not understood! Must be \'welch\' or \'fft\'!')
-        
+            
         #find max
-        measures['breathingrate'] = frq[np.argmax(psd)]
+        measures['breathingrate'] = frq[np.argmax(psd)] * 60
         working_data['breathing_signal'] = breathing
         working_data['breathing_psd'] = psd
         working_data['breathing_frq'] = frq
