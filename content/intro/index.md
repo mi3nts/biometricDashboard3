@@ -40,7 +40,5 @@ bg = "bg-gradient-gray"
 5. **Display Oxygen Saturation Levels** Oxygen saturation levels are measured by finding peripheral capillary oxygen saturation (SpO2). SpO2 indicates how much oxygen is in the blood and can be used to determine how efficiently it is being carried to rest of the body.
 {{< /div >}}
 
-<!--: .wrap -->
-
 
 

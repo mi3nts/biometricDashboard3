@@ -3153,15 +3153,6 @@ Slides - Backgrounds <section class="bg-primary">
 .bg-black {
   background-color: #111; }
 
-.bg-black-blue {
-  background-color: #123; }
-
-.bg-blue {
-  background-color: #346; }
-
-.bg-brown {
-  background-color: #f9f8f2; }
-
 .bg-gray {
   background-color: #d5d9e2;
   border-radius: 25px;
@@ -3186,6 +3177,14 @@ Slides - Backgrounds <section class="bg-primary">
   background-color: #6f80ce;
   border-radius: 15px;
   padding: 20px;
+}
+
+.bg-custom3 {
+  width: 1628px;
+  height: 665px;
+  background-color: #d68181;
+  border-radius: 25px;
+  padding: 60px;
 }
 
 [class*='bg-'] .bg-white {
