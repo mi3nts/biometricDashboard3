@@ -1,4 +1,5 @@
 # biometricDashboard3
+Please visit the website: https://mi3nts.github.io/biometricDashboard3/
 
 ## Table of Contents
 - [Introduction](#introduction)
@@ -20,6 +21,12 @@
 Our project is the Multi-Scale Integrated Interactive Intelligent Sensing and Simulation (MINTS) Biometrics Application which visualizes different biometrics that are collected from sensors placed on participants. The biometrics we are looking at are Electroencephalogram (EEG) which looks at brain activity, Heart Activity which uses an Electrocardiogram (ECG), Heart Rate Variability (HRV), Galvanic Skin Response (GSR) which measure skin conductance, Respiration Rate, and Blood Oxygen (SPO2). The data for these biometrics is collected from sensors placed on participants, and this data is then processed in real time for the visualizations. There have been a couple of past iterations that have dealt with the computations for the EEG, and creating a dashboard that contains the visualizations for all of the biometrics. Our project is different in that it will be web-based, as this provides more flexibility and allows for easier augmentation in the future. We can use the existing code that is available for some of the visualizations and add on to it so that it fits our web-based application.
 
 ## Installation
+_Before moving forward with installing this application, please note that this application was developed using Python 3.7_
+1. Clone the repository, either by downloading the zip, or through HTTPS: `git clone https://github.com/mi3nts/biometricDashboard3.git`.
+2. From the root of the repository, run the following command: `pip install -r requirements.txt`. This will install all the necessary Python dependencies for the application to work
+### Running the application
+1. Before you can run the Bokeh application, you must start streaming data from your devices through pylsl
+2. From the root of the repository, run the application using this command: `bokeh serve --show app`. This will open the bokeh application on your default web browser.
 
 ## Modules
 
