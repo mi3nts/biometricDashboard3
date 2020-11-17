@@ -4,6 +4,7 @@ Please visit the website: https://mi3nts.github.io/biometricDashboard3/
 ## Table of Contents
 - [Introduction](#introduction)
 - [Installation](#installation)
+    * [Running the App](#running-the-application)
 - [Modules](#modules)
     * [EEG Module](#eeg-module)
     * [ECG Module](#ecg-module)
