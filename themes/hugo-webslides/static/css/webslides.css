@@ -896,7 +896,7 @@ h4 {
 h5 {
   font-size: 2rem;
   font-weight: 600;
-  line-height: 3.2rem; }
+  line-height: 1.5rem; }
 
 h6 {
   font-size: 1.8rem;
@@ -1045,7 +1045,7 @@ h4[class*='bg-'] {
   padding: 2.4rem; }
 
 h5[class*='bg-'] {
-  padding: 2.4rem; }
+  padding: 1.5rem; }
 
 h6[class*='bg-'] {
   padding: 2.4rem; }
@@ -3180,6 +3180,12 @@ Slides - Backgrounds <section class="bg-primary">
   background-color: #ced3b6;
   border-radius: 25px;
   padding: 60px;
+}
+
+.bg-custom2 {
+  background-color: #6f80ce;
+  border-radius: 15px;
+  padding: 20px;
 }
 
 [class*='bg-'] .bg-white {
