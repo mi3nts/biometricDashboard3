@@ -136,7 +136,7 @@ If you find value in this dashboard please use the following citation:
 
 __Bibtex__:
 ```
-@misc{BM3,
+@misc{biometricDashboard3,
 authors={Vihasreddy Gowreddy, Madhav Mehta, Ryan Rahman, Arjun Sridhar, Rohit Shenoy, Bharana Fernando, & Shawhin Talebi},
 title={biometricDashboard3},
 howpublished={https://github.com/mi3nts/biometricDashboard3}
