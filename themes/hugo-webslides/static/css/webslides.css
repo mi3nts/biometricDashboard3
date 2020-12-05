@@ -3180,8 +3180,8 @@ Slides - Backgrounds <section class="bg-primary">
 }
 
 .bg-custom3 {
-  width: 1628px;
-  height: 665px;
+  width: auto;
+  height: auto;
   background-color: #d68181;
   border-radius: 25px;
   padding: 60px;

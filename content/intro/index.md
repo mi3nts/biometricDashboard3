@@ -22,7 +22,7 @@ bg = "bg-gradient-gray"
 - {{< gallery href="https://www.linkedin.com/in/madhavnmehta/" title="Madhav's LinkedIn" src="images/headshot.JPG" >}}<h2>Madhav Mehta</h2><p>Class of 2020</p>{{< /gallery >}}
 - {{< gallery href="https://www.linkedin.com/in/arjun-sridhar-792826195/" title="Arjun's LinkedIn" src="images/arjun.jpg" >}}<h2>Arjun Sridhar</h2><p>Class of 2020</p>{{< /gallery >}}
 - {{< gallery href="https://www.linkedin.com/in/ryan-x-rahman/" title="Ryan's LinkedIn" src="images/ryan.jpg" >}}<h2>Ryan Rahman</h2><p>Class of 2021</p>{{< /gallery >}}
-- {{< gallery href="https://www.linkedin.com/in/rohitshenoy2/" title="Rohit's LinkedIn" src="images/rohit.jpg" >}}<h2>Rohit Shenoy</h2><p>Class of 2021?</p>{{< /gallery >}}
+- {{< gallery href="https://www.linkedin.com/in/rohitshenoy2/" title="Rohit's LinkedIn" src="images/rohit.jpg" >}}<h2>Rohit Shenoy</h2><p>Class of 2021</p>{{< /gallery >}}
 - {{< gallery href="https://www.linkedin.com/in/vihas-gowreddy-550499171/" title="Vihas's LinkedIn" src="images/Vihas.jpg" >}}<h2>Vihas Gowreddy</h2><p>Class of 2021</p>{{< /gallery >}}
 {{< /div >}}
 
