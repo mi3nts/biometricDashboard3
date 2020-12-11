@@ -30,7 +30,7 @@ UPDATE: for faster processing, application is split into 2 parts. One part inclu
 
 1. Before you can run the Bokeh application, you must start streaming data from your devices through pylsl
 2. From the root of the repository, run the EEG application using this command: `bokeh serve --show app/eeg/.` This will open the bokeh application on your default web browser.
-3. Similarly, in a separate command line instance. From the root of the repository, run the EEG application using this command: `bokeh serve --show app/ecg_gsr/. --port 5007` 
+3. Similarly, in a separate command line instance. From the root of the repository, run the EEG application using this command: `bokeh serve --show app/resp_gsr/. --port 5007` 
 
 ## Modules
 
