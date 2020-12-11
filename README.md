@@ -26,8 +26,11 @@ Our project is the Multi-Scale Integrated Interactive Intelligent Sensing and Si
 1. Clone the repository, either by downloading the zip, or through HTTPS: `git clone https://github.com/mi3nts/biometricDashboard3.git`.
 2. From the root of the repository, run the following command: `pip install -r requirements.txt`. This will install all the necessary Python dependencies for the application to work
 ### Running the application
+UPDATE: for faster processing, application is split into 2 parts. One part includes EEG visualizations and the other includes respiratory and GSR metrics.
+
 1. Before you can run the Bokeh application, you must start streaming data from your devices through pylsl
-2. From the root of the repository, run the application using this command: `bokeh serve --show app`. This will open the bokeh application on your default web browser.
+2. From the root of the repository, run the EEG application using this command: `bokeh serve --show app/eeg/.` This will open the bokeh application on your default web browser.
+3. Similarly, in a separate command line instance. From the root of the repository, run the EEG application using this command: `bokeh serve --show app/ecg_gsr/. --port 5007` 
 
 ## Modules
 
