@@ -1,6 +1,7 @@
 import numpy as np
 from collections import deque
-from scipy.signal import butter, lfilter
+from scipy.signal import butter, lfilter, welch
+from scipy.interpolate import UnivariateSpline
 
 
 class QRSDetectorOnline(object):
@@ -43,21 +44,21 @@ class QRSDetectorOnline(object):
         QRSDetector class initialisation method.
         """
         # Configuration parameters.
-        self.signal_frequency = 50  # Set ECG device frequency in samples per second here.
+        self.signal_frequency = 500  # Set ECG device frequency in samples per second here.
 
-        self.number_of_samples_stored = 40  # Change proportionally when adjusting frequency (in samples).
+        self.number_of_samples_stored = 400  # Change proportionally when adjusting frequency (in samples).
 
         self.filter_lowcut = 0.1
         self.filter_highcut = 15.0
         self.filter_order = 1
 
-        self.integration_window = 3  # Change proportionally when adjusting frequency (in samples).
+        self.integration_window = 30 # Change proportionally when adjusting frequency (in samples).
 
         self.findpeaks_limit = 0.35
-        self.findpeaks_spacing = 10  # Change proportionally when adjusting frequency (in samples).
-        self.detection_window = 8  # Change proportionally when adjusting frequency (in samples).
+        self.findpeaks_spacing = 100  # Change proportionally when adjusting frequency (in samples).
+        self.detection_window = 80  # Change proportionally when adjusting frequency (in samples).
 
-        self.refractory_period = 20  # Change proportionally when adjusting frequency (in samples).
+        self.refractory_period = 200  # Change proportionally when adjusting frequency (in samples).
         self.qrs_peak_filtering_factor = 0.125
         self.noise_peak_filtering_factor = 0.125
         self.qrs_noise_diff_weight = 0.25
@@ -100,11 +101,11 @@ class QRSDetectorOnline(object):
         if self.detected_qrs == 1:
             self.most_recent_rr_list.append(self.measurement)
 
-        # Call calculate_hrv function to get the three hrv calculations
+        # # Call calculate_hrv function to get the three hrv calculations
         hrv_calculations = self.calculate_hrv(self.most_recent_rr_list)
         hrv_calculations['is_peak'] = self.detected_qrs
 
-        return hrv_calculations
+        return hrv_calculations, self.most_recent_rr_list
 
     def detect_peaks(self, most_recent_measurements):
         """
@@ -228,3 +229,86 @@ class QRSDetectorOnline(object):
         if limit is not None:
             ind = ind[data[ind] > limit]
         return ind
+
+    def calc_breathing(self, rrlist, sampling_freq, method='welch', filter_breathing=True,
+                       bw_cutoff=[0.1, 0.4], measures={}, working_data={}):
+            '''estimates breathing rate
+            Function that estimates breathing rate from heart rate signal.
+            Upsamples the list of detected rr_intervals by interpolation then
+            tries to extract breathing peaks in the signal.
+            Parameters
+            ----------
+            rr_list : 1d list or array
+                list or array containing peak-peak intervals
+            sampling_freq: integer
+                value associated with the sampling frequency of the data
+            method : str
+                method to use to get the spectrogram, must be 'fft' or 'welch'
+                default : fft
+            filter_breathing : bool
+                whether to filter the breathing signal derived from the peak-peak intervals
+                default : True
+            bw_cutoff : list or tuple
+                breathing frequency range expected
+                default : [0.1, 0.4], meaning between 6 and 24 breaths per minute
+            measures : dict
+                dictionary object used by heartpy to store computed measures. Will be created
+                if not passed to function.
+            working_data : dict
+                dictionary object that contains all heartpy's working data (temp) objects.
+                will be created if not passed to function
+            Returns
+            -------
+            measures : dict
+                dictionary object used by heartpy to store computed measures.
+            Examples
+            --------
+            Normally this function is called during the process pipeline of HeartPy. It can
+            of course also be used separately.
+            Let's load an example and get a list of peak-peak intervals
+            >>> import heartpy as hp
+            >>> data, _ = hp.load_exampledata(0)
+            >>> wd, m = hp.process(data, 100.0)
+            Breathing is then computed with the function
+            >>> m, wd = calc_breathing(wd['RR_list_cor'], measures = m, working_data = wd)
+            >>> round(m['breathingrate'], 3)
+            0.171
+            There we have it, .17Hz, or about one breathing cycle in 6.25 seconds.
+            '''
+
+            #resample RR-list to 1000Hz
+            x = np.linspace(0, len(rrlist), len(rrlist))
+            x_new = np.linspace(0, len(rrlist), np.sum(np.asarray(rrlist), dtype=np.int32))
+            interp = UnivariateSpline(x, rrlist, k=3)
+            breathing = interp(x_new)
+            #Using sampling frequency of 10*original sampling frequency to account for k=3 spline
+            adj_sampling_frequency = sampling_freq * 10
+
+            if filter_breathing:
+                breathing = self.bandpass_filter(breathing, lowcut=bw_cutoff[0],
+                                                             highcut=bw_cutoff[1], signal_freq=float(adj_sampling_frequency),
+                                                             filter_order=self.filter_order)
+
+            if method.lower() == 'fft':
+                datalen = len(breathing)
+                frq = np.fft.fftfreq(datalen, d=((1/float(adj_sampling_frequency))))
+                frq = frq[range(int(datalen/2))]
+                Y = np.fft.fft(breathing)/datalen
+                Y = Y[range(int(datalen/2))]
+                psd = np.power(np.abs(Y), 2)
+            elif method.lower() == 'welch':
+                if len(breathing) < 30000:
+                    frq, psd = welch(breathing, fs=adj_sampling_frequency, nperseg=len(breathing))
+                else:
+                    frq, psd = welch(breathing, fs=adj_sampling_frequency, nperseg=np.clip(len(breathing) // 10,
+                                                                        a_min=30000, a_max=None))
+            else:
+                raise ValueError('Breathing rate extraction method not understood! Must be \'welch\' or \'fft\'!')
+
+            #find max
+            measures['breathingrate'] = frq[np.argmax(psd)] * 60
+            working_data['breathing_signal'] = breathing
+            working_data['breathing_psd'] = psd
+            working_data['breathing_frq'] = frq
+
+            return measures, working_data

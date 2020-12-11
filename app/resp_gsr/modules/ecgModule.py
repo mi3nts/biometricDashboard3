@@ -8,14 +8,12 @@
 from bokeh.plotting import figure
 from bokeh.models import HoverTool
 
-
 class ecgModule:
 
     def __init__(self, source, source_num):
 
         # DEFINE FIGURE
         # ----------------------------------------------------------------------
-
         self.Fig = figure(plot_width=1050, plot_height=600, y_range = [2000, 4000])
         self.Fig.xaxis.axis_label = 'Time Index'
         self.Fig.yaxis.axis_label = 'ECG (uV)'
@@ -39,14 +37,11 @@ class ecgModule:
             mode='vline'
         ))
 
+
         # DEFINE PLOT
         # ----------------------------------------------------------------------
-        
-        #plot is created using source data thats passedS when class is called
         self.Plot = self.Fig.line(x='ecg_x', y='ecg_y', source=source, \
                               color='#FB9A99', line_width = 2)
 
-
         self.Text = self.Fig.text(x="hr_x", y="hr_y", text="hr", source=source_num, \
         text_font_size="30px", text_align="center", text_baseline="middle", text_color="#FF0000")
-

@@ -34,4 +34,5 @@ def mkColumnDataSources():
     source_ecg = ColumnDataSource(data=ecgDictionary)
     source_num = ColumnDataSource(data=numDictionary)
 
+    # return source_eeg, source_ecg, source_num
     return source_eeg, source_ecg, source_num
